@@ -12,15 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('groups', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+         $table->id('group_id');
+         $table->string('group_name', 100);
+         $table->foreignId('created_by')
+               ->constrained('users')
+              ->onDelete('cascade');
+         $table->timestamps();
+                                    
         });
     }
-
+  
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(): void 
     {
         Schema::dropIfExists('groups');
     }
