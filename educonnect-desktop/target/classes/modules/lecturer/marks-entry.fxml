@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.educonnect.controller.lecturer.MarksEntryController"
+      spacing="10" style="-fx-padding: 10;">
+
+    <Label text="Marks Entry" style="-fx-font-size: 18px;"/>
+
+    <TableView fx:id="marksTable">
+        <columns>
+            <TableColumn text="Student"/>
+            <TableColumn text="Assignment"/>
+            <TableColumn text="Exam"/>
+            <TableColumn text="Total"/>
+        </columns>
+    </TableView>
+
+    <Button text="Save Marks" onAction="#saveMarks"/>
+
+</VBox>

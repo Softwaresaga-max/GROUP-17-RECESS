@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.educonnect.controller.student.CourseDetailsController">
+
+    <!-- HEADER -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 15; -fx-background-color: #34495e;">
+            <Label fx:id="courseTitle"
+                   text="Course Details"
+                   style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Download Materials" onAction="#downloadMaterials"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER CONTENT -->
+    <center>
+        <TabPane>
+
+            <!-- Overview -->
+            <Tab text="Overview">
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Label fx:id="descriptionLabel" text="Course description..."/>
+                </VBox>
+            </Tab>
+
+            <!-- Topics -->
+            <Tab text="Topics">
+                <ListView fx:id="topicsList"/>
+            </Tab>
+
+            <!-- Resources -->
+            <Tab text="Resources">
+                <ListView fx:id="resourcesList"/>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+    <!-- FOOTER ACTIONS -->
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <Button text="Open Forum" onAction="#openForum"/>
+            <Button text="Start Quiz" onAction="#startQuiz"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

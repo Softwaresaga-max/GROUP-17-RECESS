@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.educonnect.controller.lecturer.ClassesController">
+
+    <top>
+        <Label text="My Classes"
+               style="-fx-padding: 10; -fx-font-size: 18px;"/>
+    </top>
+
+    <center>
+        <ListView fx:id="classList"/>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.educonnect.controller.student.ResultsController">
+
+    <!-- TOP SUMMARY BAR -->
+    <top>
+        <HBox spacing="20" style="-fx-padding: 15; -fx-background-color: #34495e;">
+            <Label text="Student Results Dashboard"
+                   style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="gpaLabel"
+                   text="GPA: --"
+                   style="-fx-text-fill: #2ecc71; -fx-font-size: 16px;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER RESULTS TABLE -->
+    <center>
+        <TableView fx:id="resultsTable">
+
+            <columns>
+                <TableColumn text="Course"/>
+                <TableColumn text="Assignment"/>
+                <TableColumn text="Exam"/>
+                <TableColumn text="Total"/>
+                <TableColumn text="Grade"/>
+            </columns>
+
+        </TableView>
+    </center>
+
+    <!-- BOTTOM ACTIONS -->
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <Button text="Refresh Results" onAction="#loadResults"/>
+            <Button text="View Course Breakdown" onAction="#viewDetails"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

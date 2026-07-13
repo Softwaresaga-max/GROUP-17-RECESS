@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.educonnect.controller.LoginController"
+      spacing="20"
+      alignment="CENTER"
+      style="-fx-padding: 40; -fx-background-color: linear-gradient(to bottom, #2c3e50, #4ca1af);">
+
+    <!-- Title -->
+    <Label text="EduConnect"
+           style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+    <Label text="Login to your account"
+           style="-fx-text-fill: #ecf0f1;" />
+
+    <!-- Email -->
+    <TextField fx:id="emailField"
+               promptText="Email"
+               maxWidth="250"
+               style="-fx-background-radius: 8; -fx-padding: 10;" />
+
+    <!-- Password -->
+    <PasswordField fx:id="passwordField"
+                   promptText="Password"
+                   maxWidth="250"
+                   style="-fx-background-radius: 8; -fx-padding: 10;" />
+
+    <!-- Login Button -->
+    <Button text="Login"
+            onAction="#handleLogin"
+            maxWidth="250"
+            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+    <!-- Loading Indicator -->
+    <ProgressIndicator fx:id="loadingSpinner"
+                       visible="false"
+                       maxWidth="40"
+                       maxHeight="40"/>
+
+    <!-- Message Label -->
+    <Label fx:id="messageLabel"
+           style="-fx-text-fill: #e74c3c;" />
+
+</VBox>

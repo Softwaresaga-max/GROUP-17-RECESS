@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.educonnect.controller.admin.ClassStudentController">
+
+
+    <top>
+
+        <HBox spacing="10"
+              style="-fx-padding:10;
+                     -fx-background-color:#2c3e50;">
+
+
+            <Label text="Class Students Management"
+                   style="-fx-text-fill:white;
+                          -fx-font-size:18px;"/>
+
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+
+            <Button text="Assign Student"
+                    onAction="#assignStudent"/>
+
+
+            <Button text="Remove Student"
+                    onAction="#removeStudent"/>
+
+
+        </HBox>
+
+    </top>
+
+
+
+    <center>
+
+        <TableView fx:id="studentTable">
+
+
+            <columns>
+
+
+                <TableColumn fx:id="idCol"
+                             text="ID"/>
+
+
+                <TableColumn fx:id="nameCol"
+                             text="Student Name"/>
+
+
+                <TableColumn fx:id="emailCol"
+                             text="Email"/>
+
+
+                <TableColumn fx:id="classCol"
+                             text="Class"/>
+
+
+                <TableColumn fx:id="statusCol"
+                             text="Status"/>
+
+
+            </columns>
+
+
+        </TableView>
+
+
+    </center>
+
+
+</BorderPane>
