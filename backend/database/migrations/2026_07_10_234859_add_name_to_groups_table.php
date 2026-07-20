@@ -8,16 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('groups', function (Blueprint $table) {
-            $table->string('name')->after('id');
-        });
+        
     }
 
 
     public function down(): void
     {
-        Schema::table('groups', function (Blueprint $table) {
-            $table->dropColumn('name');
-        });
+       
     }
 };
