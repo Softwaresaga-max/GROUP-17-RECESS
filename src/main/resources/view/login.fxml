@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="350.0" prefWidth="400.0" spacing="12.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.LoginController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+    </padding>
+
+    <Label text="EduConnect Forum" textFill="#2a52be">
+        <font>
+            <Font name="System Bold" size="22.0" />
+        </font>
+    </Label>
+
+    <Label text="Sign in to your account" textFill="#666666" />
+
+    <VBox alignment="CENTER_LEFT" spacing="5.0">
+        <Label text="Username">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <TextField fx:id="usernameField" promptText="Enter username..." />
+    </VBox>
+
+    <VBox alignment="CENTER_LEFT" spacing="5.0">
+        <Label text="Password">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <PasswordField fx:id="passwordField" promptText="Enter password..." />
+    </VBox>
+
+    <Label fx:id="statusLabel" text="" textFill="#dc3545" wrapText="true">
+        <font><Font size="12.0" /></font>
+    </Label>
+
+    <Button fx:id="actionButton" onAction="#handleAction" prefWidth="200.0" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
+
+    <Hyperlink fx:id="toggleModeLink" onAction="#handleToggleMode" text="Need an account? Register" />
+</VBox>

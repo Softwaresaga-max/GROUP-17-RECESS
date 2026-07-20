@@ -1,0 +1,65 @@
+/* Base Styles */
+.root {
+    -fx-font-family: "System";
+}
+
+/* Light Theme (Default) */
+.light-theme {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #212529;
+}
+
+.light-theme .header-bar {
+    -fx-background-color: #2a52be;
+}
+
+.light-theme .sidebar-card {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 5;
+}
+
+.light-theme .text-area-read {
+    -fx-control-inner-background: #fdfdfd;
+}
+
+/* Dark Theme */
+.dark-theme {
+    -fx-background-color: #1e1e2e;
+    -fx-text-fill: #cdd6f4;
+}
+
+.dark-theme .header-bar {
+    -fx-background-color: #11111b;
+}
+
+.dark-theme .sidebar-card {
+    -fx-background-color: #313244;
+    -fx-background-radius: 5;
+}
+
+.dark-theme .list-view,
+.dark-theme .text-field,
+.dark-theme .text-area,
+.dark-theme .combo-box {
+    -fx-control-inner-background: #1e1e2e;
+    -fx-background-color: #313244;
+    -fx-text-fill: #cdd6f4;
+}
+
+.dark-theme .list-cell {
+    -fx-background-color: #1e1e2e;
+    -fx-text-fill: #cdd6f4;
+}
+
+.dark-theme .list-cell:selected {
+    -fx-background-color: #45475a;
+    -fx-text-fill: #ffffff;
+}
+
+.dark-theme .label {
+    -fx-text-fill: #cdd6f4;
+}
+
+.dark-theme .text-area-read {
+    -fx-control-inner-background: #181825;
+}

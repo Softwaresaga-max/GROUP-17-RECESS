@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="rootPane" prefHeight="620.0" prefWidth="900.0" stylesheets="@/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.DashboardController">
+    <!-- Top Header Bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" styleClass="header-bar" spacing="12.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+            </padding>
+            <Label text="EduConnect Forum" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Label>
+            <Button onAction="#handleOpenQuiz" style="-fx-background-color: #ffffff; -fx-text-fill: #2a52be; -fx-font-weight: bold;" text="Take Quiz 📝" />
+            <Button onAction="#handleOpenAnalytics" style="-fx-background-color: #ffffff; -fx-text-fill: #2a52be; -fx-font-weight: bold;" text="Analytics 📊" />
+            <Button onAction="#handleSyncData" style="-fx-background-color: #28a745; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="Sync Cloud 🔄" />
+            <Button onAction="#handleToggleTheme" style="-fx-background-color: #6c757d; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="🌙 / ☀️ Mode" />
+            <Button fx:id="notifButton" onAction="#handleOpenNotifications" style="-fx-background-color: #ff9800; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="🔔 (0)" />
+            <Label fx:id="syncStatusLabel" text="Pending Sync: 0" textFill="#ffeb3b">
+                <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="welcomeLabel" text="Welcome, User!" textFill="#e0e0e0">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <SplitPane dividerPositions="0.45" BorderPane.alignment="CENTER">
+            <!-- Left Side: Search, Post List & Filter -->
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                </padding>
+
+                <TextField fx:id="searchField" promptText="🔍 Search threads by title or content..." />
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label text="Category:">
+                        <font><Font name="System Bold" size="12.0" /></font>
+                    </Label>
+                    <ComboBox fx:id="categoryFilterBox" onAction="#handleCategoryFilter" prefWidth="150.0" />
+                </HBox>
+
+                <ListView fx:id="postListView" prefHeight="250.0" VBox.vgrow="ALWAYS" />
+
+                <!-- New Discussion Section -->
+                <VBox spacing="8.0" styleClass="sidebar-card">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                    <Label text="Start a Discussion">
+                        <font><Font name="System Bold" size="13.0" /></font>
+                    </Label>
+                    <ComboBox fx:id="newPostCategoryBox" prefWidth="200.0" promptText="Select Category" />
+                    <TextField fx:id="postTitleField" promptText="Topic Title..." />
+                    <TextArea fx:id="postContentArea" prefHeight="60.0" promptText="Write your question..." wrapText="true" />
+                    <Button onAction="#handlePostSubmit" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Post Thread" />
+                </VBox>
+            </VBox>
+
+            <!-- Right Side: Post Details & Threaded Comments -->
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                </padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label fx:id="selectedTitleLabel" text="Select a thread to read" wrapText="true" HBox.hgrow="ALWAYS">
+                        <font><Font name="System Bold" size="16.0" /></font>
+                    </Label>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button fx:id="deletePostButton" visible="false" onAction="#handleDeletePost" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete Thread 🗑️" />
+                </HBox>
+
+                <Label fx:id="selectedAuthorLabel" text="" textFill="#666666" />
+
+                <TextArea fx:id="selectedContentArea" editable="false" prefHeight="100.0" styleClass="text-area-read" wrapText="true" />
+
+                <Separator />
+
+                <Label text="Replies &amp; Discussion">
+                    <font><Font name="System Bold" size="13.0" /></font>
+                </Label>
+
+                <ListView fx:id="commentListView" prefHeight="150.0" VBox.vgrow="ALWAYS" />
+
+                <!-- Add Comment Box -->
+                <HBox spacing="8.0">
+                    <TextField fx:id="commentField" promptText="Write a reply..." HBox.hgrow="ALWAYS" />
+                    <Button onAction="#handleCommentSubmit" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;" text="Reply" />
+                </HBox>
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>
