@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('registration_code')->nullable();
+            
+            // All custom user attributes in one place
+            $table->string('role')->default('student');
+            $table->unsignedBigInteger('class_id')->nullable();
+            $table->boolean('onboarding_completed')->default(false);
+            $table->string('onboarding_status')->default('pending');
+            
             $table->rememberToken();
             $table->timestamps();
         });

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -26,45 +25,45 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'registration_code' => ['required', 'string', 'unique:users'],
-    ]);
-
-    // 🔥 AUTO ROLE LOGIC
-    $role = null;
-
-    if (str_starts_with($request->registration_code, 'STU')) {
-        $role = 'student';
-    } elseif (str_starts_with($request->registration_code, 'LEC')) {
-        $role = 'lecturer';
-    } elseif (str_starts_with($request->registration_code, 'ADM')) {
-        $role = 'admin';
-    } else {
-        throw ValidationException::withMessages([
-            'registration_code' => 'Invalid code. Use STU, LEC or ADM prefix'
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // Capture registration code from whatever field name was submitted
+        $rawCode = trim($request->input('registration_code') ?? $request->input('registration_number') ?? '');
+
+        // Detect role based on prefix (LEC or STU)
+        $role = 'student';
+        if (str_starts_with(strtoupper($rawCode), 'LEC')) {
+            $role = 'lecturer';
+        } elseif ($request->filled('role')) {
+            $role = $request->role;
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'registration_code' => $rawCode,
+            'role' => $role,
+            'class_id' => $request->class_id ?? 1,
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        // Redirect based on the saved role
+        if ($user->role === 'lecturer') {
+            return redirect()->intended('/lecturer/dashboard');
+        }
+
+        return redirect()->intended('/student/dashboard');
     }
-
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'registration_code' => $request->registration_code,
-        'role' => $role,
-        'onboarding_status' => 'pending',
-    ]);
-
-    event(new Registered($user));
-
-    Auth::login($user);
-
-    return redirect()->route('onboarding');
-}
 }
