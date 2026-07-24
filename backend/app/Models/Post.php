@@ -30,3 +30,9 @@ class Post extends Model
     }
 
 }
+
+
+     public function shares()
+{
+    return $this->hasMany(PostShare::class);
+}

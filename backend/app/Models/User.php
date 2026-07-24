@@ -14,10 +14,13 @@ use App\Models\Blacklist;
 use App\Models\ActivityLog;
 use App\Models\Course;
 use App\Models\ClassRoom;
+use App\Models\Discussion;
+use App\Models\DiscussionReply;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
 
     protected $fillable = [
         'name',
@@ -29,16 +32,22 @@ class User extends Authenticatable
         'active',
     ];
 
+
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+
 
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'active' => 'boolean',
     ];
+
+
 
     /**
      * User belongs to many groups
@@ -53,6 +62,8 @@ class User extends Authenticatable
         );
     }
 
+
+
     /**
      * User has many quiz attempts
      */
@@ -60,6 +71,30 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attempt::class);
     }
+
+
+
+    /**
+     * Discussions created by the user
+     * Used for participation grading
+     */
+    public function discussions()
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
+
+
+    /**
+     * Discussion replies made by the user
+     * Used for participation grading
+     */
+    public function discussionReplies()
+    {
+        return $this->hasMany(DiscussionReply::class);
+    }
+
+
 
     /**
      * User belongs to a course
@@ -69,6 +104,8 @@ class User extends Authenticatable
         return $this->belongsTo(Course::class);
     }
 
+
+
     /**
      * User belongs to a classroom
      */
@@ -76,6 +113,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ClassRoom::class);
     }
+
+
 
     /**
      * User warnings
@@ -85,6 +124,8 @@ class User extends Authenticatable
         return $this->hasMany(Warning::class);
     }
 
+
+
     /**
      * User blacklist records
      */
@@ -92,6 +133,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Blacklist::class);
     }
+
+
 
     /**
      * User activity logs

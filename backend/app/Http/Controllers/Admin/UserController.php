@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     // ✅ GET ALL USERS
-    public function index()
-    {
-        return response()->json(User::all());
-    }
+  public function index()
+{
+    $users = User::latest()->get();
+
+    return view('admin.users', compact('users'));
+}
 
     // ✅ CREATE USER
     public function store(Request $request)
@@ -38,24 +40,14 @@ class UserController extends Controller
     }
 
     // ✅ DELETE USER
-    public function destroy($id)
-    {
-        $user = User::find($id);
+public function destroy(User $user)
+{
+    $user->delete();
 
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'User not found'
-            ], 404);
-        }
-
-        $user->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User deleted successfully'
-        ]);
-    }
+    return redirect()
+        ->route('admin.users')
+        ->with('success', 'User deleted successfully.');
+}
 
     // ✅ 🔥 ASSIGN STUDENT TO CLASS
 public function assignStudent(Request $request)
@@ -88,4 +80,20 @@ public function assignStudent(Request $request)
         'data' => $user
     ]);
 }
+
+public function updateRole(Request $request, User $user)
+{
+    $request->validate([
+        'role' => 'required|in:admin,lecturer,student',
+    ]);
+
+    $user->update([
+        'role' => $request->role,
+    ]);
+
+    return redirect()
+        ->route('admin.users')
+        ->with('success', 'User role updated successfully.');
+}
+
 }

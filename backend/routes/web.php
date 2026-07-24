@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PdfController;
 
 
 /*
@@ -60,7 +61,7 @@ Route::get('/dashboard', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+   Route::middleware(['auth','blacklist'])->group(function () {
 
 
     /*
@@ -178,6 +179,11 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::resource('discussions', DiscussionController::class);
+
+    Route::get(
+    '/discussions/{discussion}/pdf',
+    [PdfController::class, 'discussionPdf']
+)->name('discussions.pdf');
 
 
 
@@ -358,6 +364,24 @@ Route::middleware(['auth','role:admin'])
 ->prefix('admin')
 ->group(function(){
 
+    Route::get('/groups', [GroupController::class, 'index'])
+    ->name('admin.groups');
+
+Route::get('/groups/create', [GroupController::class, 'create'])
+    ->name('admin.groups.create');
+
+Route::post('/groups', [GroupController::class, 'store'])
+    ->name('admin.groups.store');
+
+Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])
+    ->name('admin.groups.edit');
+
+Route::put('/groups/{group}', [GroupController::class, 'update'])
+    ->name('admin.groups.update');
+
+Route::delete('/groups/{group}', [GroupController::class, 'destroy'])
+    ->name('admin.groups.destroy');
+
 
     Route::get('/reports',
         [AdminDashboardController::class,'reports'])
@@ -396,10 +420,7 @@ Route::middleware(['auth','role:admin'])
 
 Route::middleware('auth')->group(function(){
 
-Route::resource(
-    'discussions',
-    DiscussionController::class
-);
+
 
 
     Route::middleware('role:lecturer')->group(function(){
