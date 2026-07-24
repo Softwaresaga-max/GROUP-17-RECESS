@@ -70,7 +70,7 @@ class LecturerDashboardController extends Controller
     ]);
 
 }
-    }
+    
 
 
 
