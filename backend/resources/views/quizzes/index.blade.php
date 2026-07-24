@@ -37,10 +37,21 @@ Duration:
 
         <small>Created by: {{ $quiz->user->name ?? 'Unknown' }}</small>
 
-        @if(auth()->user()->role === 'lecturer' || auth()->user()->role === 'admin')
-            <br><br>
-            <a href="{{ route('quizzes.questions', $quiz) }}">➕ Add Questions</a>
-        @endif
+       @if(auth()->user()->role === 'lecturer' || auth()->user()->role === 'admin')
+
+    <br><br>
+
+    <a href="{{ route('quizzes.questions', $quiz) }}">
+        ➕ Add Questions
+    </a>
+
+    <br><br>
+
+    <a href="{{ route('quizzes.analytics', $quiz) }}">
+        📊 View Analytics
+    </a>
+
+@endif
     </div>
 @empty
     <p>No quizzes available yet.</p>

@@ -51,7 +51,7 @@
     </a>
 
     <a href="{{ route('lecturer.analytics') }}" class="card" style="text-decoration:none; color:inherit;">
-        <div class="title">📊 Analytics</div>
+        <div class="title">📊 Performance Analytics</div>
         <div class="subtitle">View student performance</div>
     </a>
 

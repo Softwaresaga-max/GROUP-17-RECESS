@@ -251,18 +251,24 @@ public function create()
      * Lecturer analytics
      */
     public function analytics(Quiz $quiz)
-    {
-        $attempts = $quiz->attempts()->with('user')->get();
+{
+    $attempts = $quiz->attempts()
+        ->with('user')
+        ->get();
 
-        $totalStudents = $attempts->count();
-        $averageScore = $attempts->avg('score');
+    $totalStudents = $attempts->count();
 
-        return view('lecturer.quiz.analytics', compact(
+    $averageScore = round($attempts->avg('score'), 2);
+
+    return view(
+        'lecturer.quiz.analytics',
+        compact(
             'quiz',
             'attempts',
             'totalStudents',
             'averageScore'
-        ));
-    }
+        )
+    );
+}
 
 }

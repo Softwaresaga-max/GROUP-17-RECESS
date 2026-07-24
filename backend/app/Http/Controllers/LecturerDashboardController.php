@@ -24,57 +24,52 @@ class LecturerDashboardController extends Controller
 
 
 
-    public function grading()
-    {
+   public function grading()
+{
 
-        $students = User::where('role','student')
-            ->with([
-                'discussions',
-                'discussionReplies',
-                'attempts'
-            ])
-            ->get();
-
-
-
-        foreach($students as $student){
+    $students = User::where('role','student')
+        ->with([
+            'discussions',
+            'discussionReplies',
+            'attempts.quiz'
+        ])
+        ->get();
 
 
-            $student->discussion_marks =
-                $student->discussions->count() * 5;
+    foreach($students as $student){
+
+        $student->discussion_marks =
+            $student->discussions->count() * 5;
 
 
-            $student->reply_marks =
-                $student->discussionReplies->count() * 2;
+        $student->reply_marks =
+            $student->discussionReplies->count() * 2;
 
 
-            $student->quiz_marks =
-                $student->attempts->count() * 5;
+        $student->quiz_marks =
+            $student->attempts->sum('score');
 
 
-            $student->completed_marks =
-                $student->attempts
-                ->where('completed',true)
-                ->count() * 10;
+        $student->completed_marks =
+            $student->attempts
+            ->where('completed', true)
+            ->count() * 10;
 
 
+        $student->participation_score =
+            $student->discussion_marks +
+            $student->reply_marks +
+            $student->quiz_marks +
+            $student->completed_marks;
 
-            $student->participation_score =
-                $student->discussion_marks +
-                $student->reply_marks +
-                $student->quiz_marks +
-                $student->completed_marks;
-
-        }
-
+    }
 
 
-        return view('lecturer.grading',[
+    return view('lecturer.grading',[
+        'students'=>$students
+    ]);
 
-            'students'=>$students
-
-        ]);
-
+}
     }
 
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\DiscussionReplyController;
 
 
 /*
@@ -184,6 +185,11 @@ Route::get('/dashboard', function () {
     '/discussions/{discussion}/pdf',
     [PdfController::class, 'discussionPdf']
 )->name('discussions.pdf');
+
+    Route::post(
+    '/discussions/{discussion}/reply',
+    [DiscussionReplyController::class, 'store']
+)->name('discussion.reply');
 
 
 

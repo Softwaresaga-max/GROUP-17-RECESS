@@ -79,19 +79,19 @@ class DiscussionController extends Controller
 
 
     public function show(Discussion $discussion)
-    {
+{
+    $discussion->increment('views');
 
-        $discussion->increment('views');
+    $discussion->load([
+        'user',
+        'replies.user'
+    ]);
 
-
-        return view(
-            'discussions.show',
-            compact('discussion')
-        );
-
-    }
-
-
+    return view(
+        'discussions.show',
+        compact('discussion')
+    );
+}
 
 
     public function edit(Discussion $discussion)
