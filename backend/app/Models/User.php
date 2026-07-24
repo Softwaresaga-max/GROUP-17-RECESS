@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -9,11 +9,15 @@ use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Group;
 use App\Models\Attempt;
+use App\Models\Warning;
+use App\Models\Blacklist;
+use App\Models\ActivityLog;
+use App\Models\Course;
+use App\Models\ClassRoom;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
 
     protected $fillable = [
         'name',
@@ -25,19 +29,16 @@ class User extends Authenticatable
         'active',
     ];
 
-
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
 
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'active' => 'boolean',
     ];
-
 
     /**
      * User belongs to many groups
@@ -52,7 +53,6 @@ class User extends Authenticatable
         );
     }
 
-
     /**
      * User has many quiz attempts
      */
@@ -61,13 +61,43 @@ class User extends Authenticatable
         return $this->hasMany(Attempt::class);
     }
 
+    /**
+     * User belongs to a course
+     */
     public function course()
-{
-    return $this->belongsTo(Course::class);
-}
+    {
+        return $this->belongsTo(Course::class);
+    }
 
-public function classRoom()
-{
-    return $this->belongsTo(ClassRoom::class);
-}
+    /**
+     * User belongs to a classroom
+     */
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    /**
+     * User warnings
+     */
+    public function warnings()
+    {
+        return $this->hasMany(Warning::class);
+    }
+
+    /**
+     * User blacklist records
+     */
+    public function blacklists()
+    {
+        return $this->hasMany(Blacklist::class);
+    }
+
+    /**
+     * User activity logs
+     */
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
