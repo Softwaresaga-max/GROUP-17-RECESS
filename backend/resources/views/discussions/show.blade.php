@@ -33,6 +33,29 @@
         Export PDF
     </a>
 
+    <div style="margin-top:15px;">
+    <strong>Share this discussion:</strong>
+    <br><br>
+
+    <a href="https://api.whatsapp.com/send?text={{ urlencode($discussion->title . ' - ' . route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#25D366; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; margin-right:8px;">
+        WhatsApp
+    </a>
+
+    <a href="https://twitter.com/intent/tweet?text={{ urlencode($discussion->title) }}&url={{ urlencode(route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#1DA1F2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; margin-right:8px;">
+        Twitter/X
+    </a>
+
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#1877F2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
+        Facebook
+    </a>
+</div> 
+
     <hr>
 
     <h3>Replies</h3>

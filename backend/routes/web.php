@@ -79,6 +79,7 @@ Route::get('/dashboard', function () {
     |--------------------------------------------------------------------------
     */
 
+    
     Route::get('/admin/dashboard',
         [AdminDashboardController::class,'index'])
         ->middleware(['role:admin','onboarding'])
@@ -193,7 +194,7 @@ Route::get('/dashboard', function () {
 Route::post('/discussions', [DiscussionController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('discussions.store');
-    
+
 Route::post(
     '/discussions/{discussion}/posts',
     [PostController::class, 'store']
@@ -424,6 +425,10 @@ Route::middleware(['auth','role:admin'])
 
     Route::get('/group-stats', [AdminDashboardController::class, 'groupStats'])
     ->name('admin.groupStats');
+
+    Route::get('/participation-grades', [AdminDashboardController::class, 'participationScores'])
+    ->name('admin.participationGrades');
+
 
 Route::get('/groups/create', [GroupController::class, 'create'])
     ->name('admin.groups.create');

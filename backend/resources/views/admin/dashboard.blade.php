@@ -105,6 +105,11 @@ Create and manage student classes
     <div class="subtitle">Per-group activity breakdown</div>
 </a>
 
+     <a href="{{ route('admin.participationGrades') }}" class="card" style="text-decoration:none; color:inherit;">
+    <div class="title">🏆 Participation Grades</div>
+    <div class="subtitle">Configurable scoring per group</div>
+</a>
+
     <a href="{{ route('admin.settings') }}" class="card" style="text-decoration:none; color:inherit;">
     <div class="title">⚙️ Settings</div>
     <div class="subtitle">Configure system rules</div>
