@@ -33,4 +33,22 @@ public function settings()
 {
     return view('admin.settings');
 }
+
+public function groupStats()
+{
+    $groups = \App\Models\Group::withCount(['discussions', 'users'])->get()->map(function ($group) {
+        $discussionIds = $group->discussions()->pluck('id');
+        $postCount = \App\Models\Post::whereIn('discussion_id', $discussionIds)->count();
+
+        return [
+            'name' => $group->name,
+            'member_count' => $group->users_count,
+            'discussion_count' => $group->discussions_count,
+            'post_count' => $postCount,
+        ];
+    });
+
+    return view('admin.group-stats', compact('groups'));
+}
+
 }

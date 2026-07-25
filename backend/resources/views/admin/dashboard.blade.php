@@ -100,6 +100,11 @@ Create and manage student classes
     <div class="subtitle">System analytics & usage data</div>
 </a>
 
+    <a href="{{ route('admin.groupStats') }}" class="card" style="text-decoration:none; color:inherit;">
+    <div class="title">📈 Group Statistics</div>
+    <div class="subtitle">Per-group activity breakdown</div>
+</a>
+
     <a href="{{ route('admin.settings') }}" class="card" style="text-decoration:none; color:inherit;">
     <div class="title">⚙️ Settings</div>
     <div class="subtitle">Configure system rules</div>

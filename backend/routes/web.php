@@ -415,6 +415,9 @@ Route::middleware(['auth','role:admin'])
     Route::get('/groups', [GroupController::class, 'index'])
     ->name('admin.groups');
 
+    Route::get('/group-stats', [AdminDashboardController::class, 'groupStats'])
+    ->name('admin.groupStats');
+
 Route::get('/groups/create', [GroupController::class, 'create'])
     ->name('admin.groups.create');
 
