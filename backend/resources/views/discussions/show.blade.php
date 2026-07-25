@@ -25,9 +25,7 @@
 
     <h3>Replies</h3>
 
-    @forelse($discussion->replies as $reply)
-
-        <div style="padding:15px;border:1px solid #ddd;margin-bottom:10px;border-radius:8px;">
+   @forelse($discussion->posts as $reply)        <div style="padding:15px;border:1px solid #ddd;margin-bottom:10px;border-radius:8px;">
 
             <strong>{{ $reply->user->name }}</strong>
 
@@ -54,8 +52,7 @@
     <h3>Write a Reply</h3>
 
     <form method="POST"
-          action="{{ route('discussion.reply', $discussion) }}">
-
+          action="{{ route('posts.store', $discussion) }}">
         @csrf
 
         <textarea

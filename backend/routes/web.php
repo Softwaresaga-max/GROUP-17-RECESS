@@ -16,7 +16,8 @@ use App\Http\Controllers\DiscussionReplyController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\ProgressController;
-
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -198,7 +199,13 @@ Route::get('/dashboard', function () {
     [DiscussionReplyController::class, 'store']
 )->name('discussion.reply');
 
+    Route::post(
+    '/discussions/{discussion}/posts',
+    [PostController::class, 'store']
+)->name('posts.store');
 
+     Route::post('/notifications/mark-read', [NotificationController::class, 'markAllRead'])
+    ->name('notifications.markRead');
 
     /*
     |--------------------------------------------------------------------------
