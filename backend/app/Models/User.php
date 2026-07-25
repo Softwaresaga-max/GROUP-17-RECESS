@@ -28,6 +28,8 @@ class User extends Authenticatable
         'password',
         'role',
         'class_id',
+        'course_id',
+        'class_room_id',
         'registration_code',
         'active',
     ];
@@ -100,9 +102,9 @@ class User extends Authenticatable
      * User belongs to a course
      */
     public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
+{
+    return $this->belongsTo(Course::class);
+}
 
 
 

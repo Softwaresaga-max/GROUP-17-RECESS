@@ -65,7 +65,33 @@
     <div class="title">👥 Manage Users</div>
     <div class="subtitle">Change student, lecturer and admin roles</div>
     
-    
+</a>
+
+<a href="{{ route('admin.courses.index') }}" 
+   class="card" 
+   style="text-decoration:none; color:inherit;">
+
+    <div class="title">
+        📚 Manage Courses
+    </div>
+
+    <div class="subtitle">
+        Create and manage academic courses
+    </div>
+
+</a>
+
+<a href="{{ route('admin.classrooms.index') }}"
+class="card"
+style="text-decoration:none;color:inherit;">
+
+<div class="title">
+🏫 Manage Classes
+</div>
+
+<div class="subtitle">
+Create and manage student classes
+</div>
 
 </a>
 

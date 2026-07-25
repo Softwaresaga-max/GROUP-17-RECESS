@@ -9,7 +9,7 @@
 <th style="padding:10px;">Student</th>
 <th>Discussions</th>
 <th>Replies</th>
-<th>Quiz Attempts</th>
+<th>Quiz Marks</th>
 <th>Total Score</th>
 </tr>
 
@@ -34,7 +34,7 @@
 
 
 <td>
-{{ $student->attempts->count() }}
+{{ $student->quiz_marks }}
 </td>
 
 

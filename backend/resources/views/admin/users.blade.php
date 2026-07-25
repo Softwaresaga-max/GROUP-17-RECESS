@@ -24,10 +24,13 @@
         <thead style="background:#2563eb;color:white;">
             <tr>
                 <th style="padding:12px;">Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Change Role</th>
-                <th>Delete</th>
+<th>Email</th>
+<th>Role</th>
+<th>Course</th>
+<th>Class</th>
+<th>Assign</th>
+<th>Change Role</th>
+<th>Delete</th>
             </tr>
         </thead>
 
@@ -42,6 +45,66 @@
                 <td>{{ $user->email }}</td>
 
                 <td>{{ ucfirst($user->role) }}</td>
+
+                
+<td >
+<form method="POST"
+      action="{{ route('admin.users.assignCourse',$user) }}">
+
+    @csrf
+
+
+    <select name="course_id" required>
+
+        <option value="">
+            Select Course
+        </option>
+
+        @foreach($courses as $course)
+
+            <option value="{{ $course->id }}"
+                {{ $user->course_id == $course->id ? 'selected' : '' }}>
+
+                {{ $course->name }}
+
+            </option>
+
+        @endforeach
+
+    </select>
+
+
+
+    <select name="class_room_id" required>
+
+        <option value="">
+            Select Class
+        </option>
+
+
+        @foreach($classRooms as $class)
+
+            <option value="{{ $class->id }}"
+                {{ $user->class_room_id == $class->id ? 'selected' : '' }}>
+
+                {{ $class->name }}
+
+            </option>
+
+        @endforeach
+
+
+    </select>
+
+
+    <button type="submit">
+        Assign
+    </button>
+
+
+</form>
+
+</td>
 
                 <td>
 

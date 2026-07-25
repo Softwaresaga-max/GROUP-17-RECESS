@@ -5,15 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Models\ClassRoom;
 
 class UserController extends Controller
 {
     // ✅ GET ALL USERS
-  public function index()
+ public function index()
 {
-    $users = User::latest()->get();
+    $users = User::with(['course','classRoom'])
+        ->latest()
+        ->get();
 
-    return view('admin.users', compact('users'));
+    $courses = Course::all();
+
+    $classRooms = ClassRoom::all();
+
+
+    return view('admin.users', compact(
+        'users',
+        'courses',
+        'classRooms'
+    ));
 }
 
     // ✅ CREATE USER
@@ -94,6 +107,27 @@ public function updateRole(Request $request, User $user)
     return redirect()
         ->route('admin.users')
         ->with('success', 'User role updated successfully.');
+}
+
+public function assignCourse(Request $request, User $user)
+{
+    $request->validate([
+        'course_id' => 'required|exists:courses,id',
+        'class_room_id' => 'required|exists:class_rooms,id',
+    ]);
+
+
+    $user->update([
+
+        'course_id' => $request->course_id,
+
+        'class_room_id' => $request->class_room_id,
+
+    ]);
+
+
+    return back()
+        ->with('success','Student course and class assigned successfully');
 }
 
 }

@@ -13,6 +13,8 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\DiscussionReplyController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\ClassRoomController;
 
 
 /*
@@ -365,6 +367,32 @@ Route::middleware('auth')->group(function(){
 | Admin Management
 |--------------------------------------------------------------------------
 */
+Route::post(
+    'users/{user}/assign-course',
+    [UserController::class,'assignCourse']
+)->name('admin.users.assignCourse');
+
+Route::middleware(['auth'])
+->prefix('admin')
+->group(function(){
+
+
+    Route::resource(
+        'classrooms',
+        ClassRoomController::class
+    )->names('admin.classrooms');
+
+
+});
+
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+
+    Route::resource(
+        'courses',
+        CourseController::class
+    )->names('admin.courses');
+
+});
 
 Route::middleware(['auth','role:admin'])
 ->prefix('admin')
