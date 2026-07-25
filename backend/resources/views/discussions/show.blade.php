@@ -1,5 +1,17 @@
 <x-app-sidebar>
 
+@if(session('error'))
+    <div class="alert alert-danger" style="background:#fdecea; color:#611a15; padding:12px; border-radius:6px; margin-bottom:15px;">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success" style="background:#e6f4ea; color:#1e4620; padding:12px; border-radius:6px; margin-bottom:15px;">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div style="max-width:900px;margin:auto;">
 
     <h2>{{ $discussion->title }}</h2>

@@ -17,6 +17,16 @@ class PostController extends Controller
             'excluded_user_ids.*' => 'exists:users,id',
         ]);
 
+        $recentDuplicate = Post::where('discussion_id', $discussion->id)
+    ->where('user_id', Auth::id())
+    ->where('content', $request->content)
+    ->where('created_at', '>=', now()->subMinutes(5))
+    ->exists();
+
+if ($recentDuplicate) {
+    return back()->with('error', 'This looks like a duplicate post. Please avoid repeating the same content.');
+}
+
         $post = Post::create([
             'discussion_id' => $discussion->id,
             'user_id' => Auth::id(),

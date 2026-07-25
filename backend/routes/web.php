@@ -187,7 +187,18 @@ Route::get('/dashboard', function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::resource('discussions', DiscussionController::class);
+   Route::resource('discussions', DiscussionController::class)
+    ->except(['store']);
+
+Route::post('/discussions', [DiscussionController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('discussions.store');
+    
+Route::post(
+    '/discussions/{discussion}/posts',
+    [PostController::class, 'store']
+)->middleware('throttle:5,1')
+ ->name('posts.store');
 
     Route::get(
     '/discussions/{discussion}/pdf',
@@ -199,10 +210,6 @@ Route::get('/dashboard', function () {
     [DiscussionReplyController::class, 'store']
 )->name('discussion.reply');
 
-    Route::post(
-    '/discussions/{discussion}/posts',
-    [PostController::class, 'store']
-)->name('posts.store');
 
      Route::post('/notifications/mark-read', [NotificationController::class, 'markAllRead'])
     ->name('notifications.markRead');

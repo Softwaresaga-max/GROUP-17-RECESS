@@ -38,6 +38,16 @@ public function store(Request $request)
         'group_id' => 'required|exists:groups,id',
     ]);
 
+    $recentDuplicate = Discussion::where('user_id', Auth::id())
+    ->where('title', $request->title)
+    ->where('created_at', '>=', now()->subMinutes(5))
+    ->exists();
+
+if ($recentDuplicate) {
+    return redirect()->route('discussions.index')
+        ->with('error', 'You already posted a discussion with this title recently.');
+}
+
     $category = 'General';
     try {
         $response = \Illuminate\Support\Facades\Http::timeout(3)->post('http://127.0.0.1:5001/classify', [

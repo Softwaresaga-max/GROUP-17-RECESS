@@ -65,6 +65,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
     ->withExceptions(function (Exceptions $exceptions): void {
 
+        $exceptions->render(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e, $request) {
+    return back()->with('error', 'You are posting too quickly. Please slow down and try again in a moment.');
+});
 
         $exceptions->shouldRenderJsonWhen(
 
