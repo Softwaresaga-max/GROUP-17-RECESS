@@ -5,22 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Initialize SQLite DB
-        DatabaseHandler.initializeDatabase();
+    public void start(Stage stage) throws IOException {
+        // Load the new modern welcome landing page first
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/welcome.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        primaryStage.setTitle("EduConnect - Login");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setTitle("EduConnect - Streamlining Communication");
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }

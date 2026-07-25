@@ -1,18 +1,18 @@
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\admin\ClassStudentController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\admin\UserFormController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\admin\UsersController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\DashboardController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\ClassesController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\ClassStudentsController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\MarksEntryController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\LoginController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\student\CourseDetailsController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\student\ProfileController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\controller\student\ResultController.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\MainApp.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\model\Student.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\model\User.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\service\ApiClient.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\service\ApiService.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\service\AuthService.java
-C:\Users\LENOVO\Desktop\RECESSYR1\laragon\www\EDUCONNECT\educonnect-desktop\src\main\java\com\educonnect\service\SessionManager.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\admin\ClassStudentController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\admin\UserFormController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\admin\UsersController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\DashboardController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\ClassesController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\ClassStudentsController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\lecturer\MarksEntryController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\LoginController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\student\CourseDetailsController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\student\ProfileController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\controller\student\ResultController.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\MainApp.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\model\Student.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\model\User.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\service\ApiClient.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\service\ApiService.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\service\AuthService.java
+E:\GROUP 17-RECESS\educonnect-desktop\src\main\java\com\educonnect\service\SessionManager.java

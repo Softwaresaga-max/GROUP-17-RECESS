@@ -2,93 +2,100 @@ package com.educonnect;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class LoginController {
 
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private Label statusLabel;
-    @FXML private Button actionButton;
-    @FXML private Hyperlink toggleModeLink;
-
-    private boolean isRegisterMode = false;
+    @FXML
+    private TextField emailField;
 
     @FXML
-    public void initialize() {
-        // Ensure DB tables exist on launch
-        DatabaseHandler.initializeDatabase();
+    private PasswordField passwordField;
+
+    @FXML
+    private TextField visiblePasswordField;
+
+    @FXML
+    private Button togglePasswordButton;
+
+    @FXML
+    private void handleTogglePassword() {
+        if (visiblePasswordField.isVisible()) {
+            // Hide password, show password field
+            passwordField.setText(visiblePasswordField.getText());
+            visiblePasswordField.setVisible(false);
+            visiblePasswordField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            togglePasswordButton.setText("Show");
+        } else {
+            // Show password, hide password field
+            visiblePasswordField.setText(passwordField.getText());
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            visiblePasswordField.setVisible(true);
+            visiblePasswordField.setManaged(true);
+            togglePasswordButton.setText("Hide");
+        }
     }
 
     @FXML
-    private void handleAction() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+    private void handleLoginButtonAction() {
+        // Automatically sync text in case they logged in while text was visible
+        String username = emailField.getText() != null ? emailField.getText().trim() : "";
+        String password;
+        if (visiblePasswordField.isVisible()) {
+            password = visiblePasswordField.getText() != null ? visiblePasswordField.getText().trim() : "";
+        } else {
+            password = passwordField.getText() != null ? passwordField.getText().trim() : "";
+        }
 
         if (username.isEmpty() || password.isEmpty()) {
-            statusLabel.setText("Please enter both username and password.");
+            System.out.println("Please enter both username and password.");
             return;
         }
 
-        if (isRegisterMode) {
-            // Register standard student account
-            if (DatabaseHandler.registerUser(username, password)) {
-                statusLabel.setStyle("-fx-text-fill: green;");
-                statusLabel.setText("Registration successful! Please log in.");
-                toggleMode(); // Switch back to login view
-            } else {
-                statusLabel.setStyle("-fx-text-fill: red;");
-                statusLabel.setText("Username already exists. Try another.");
+        // Call the multi-case authentication method from DatabaseHandler
+        String role = DatabaseHandler.authenticateAndGetRole(username, password);
+
+        if (role != null) {
+            System.out.println("Login Successful! Logged in as role: " + role);
+
+            try {
+                Stage stage = (Stage) emailField.getScene().getWindow();
+
+                // Determine which screen to load based on the user's role
+                String fxmlFile = "";
+                switch (role) {
+                    case "ADMIN":
+                        fxmlFile = "/view/admin_dashboard.fxml";
+                        break;
+                    case "LECTURER":
+                        fxmlFile = "/view/lecturer_dashboard.fxml";
+                        break;
+                    case "STUDENT":
+                    default:
+                        fxmlFile = "/view/onboarding_step1.fxml"; // Starts the student onboarding wizard
+                        break;
+                }
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+                Scene scene = new Scene(loader.load());
+
+                stage.setTitle("EduConnect - " + role + " Portal");
+                stage.setScene(scene);
+                stage.centerOnScreen();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Failed to load dashboard view. Check your FXML file paths.");
             }
+
         } else {
-            // Authenticate existing account (Admin or Student)
-            if (DatabaseHandler.authenticateUser(username, password)) {
-                openDashboard(username);
-            } else {
-                statusLabel.setStyle("-fx-text-fill: red;");
-                statusLabel.setText("Invalid username or password.");
-            }
-        }
-    }
-
-    @FXML
-    private void handleToggleMode() {
-        toggleMode();
-    }
-
-    private void toggleMode() {
-        isRegisterMode = !isRegisterMode;
-        statusLabel.setText("");
-
-        if (isRegisterMode) {
-            actionButton.setText("Register Account");
-            toggleModeLink.setText("Already have an account? Log in");
-        } else {
-            actionButton.setText("Log In");
-            toggleModeLink.setText("Need an account? Register");
-        }
-    }
-
-    private void openDashboard(String username) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
-            Parent root = loader.load();
-
-            DashboardController dashboardController = loader.getController();
-            dashboardController.setUsername(username);
-
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setTitle("EduConnect - Main Dashboard");
-            stage.setScene(new Scene(root, 900, 620));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            statusLabel.setText("Failed to load dashboard screen.");
+            System.out.println("Login Failed. Check credentials.");
         }
     }
 }

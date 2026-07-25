@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.WelcomeController">
+    <children>
+        <!-- Top Navigation Bar -->
+        <AnchorPane layoutX="40.0" layoutY="20.0" prefWidth="920.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-padding: 6 12; -fx-background-radius: 6;" text="E">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Label text="Educonnect" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <HBox layoutX="700.0" spacing="15.0" AnchorPane.rightAnchor="0.0">
+                    <children>
+                        <Button fx:id="loginNavButton" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-outline" text="Log in" />
+                        <Button fx:id="getStartedNavButton" mnemonicParsing="false" onAction="#handleGetStarted" styleClass="button-primary" text="Get Started" />
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+
+        <!-- Hero Section -->
+        <VBox alignment="CENTER" layoutX="150.0" layoutY="110.0" prefWidth="700.0" spacing="15.0">
+            <children>
+                <Label style="-fx-background-color: #e0e7ff; -fx-text-fill: #4f46e5; -fx-padding: 4 12; -fx-background-radius: 20; -fx-font-size: 11px; -fx-font-weight: bold;" text="ACADEMIC &amp; DISCUSSION FORUM" />
+
+                <Label alignment="CENTER" text="Streamlining Communication Between" textFill="#1e293b">
+                    <font>
+                        <Font name="System Bold" size="36.0" />
+                    </font>
+                </Label>
+
+                <Label alignment="CENTER" text="Students &amp; Lecturers" textFill="#4f46e5">
+                    <font>
+                        <Font name="System Bold" size="36.0" />
+                    </font>
+                </Label>
+
+                <Label alignment="CENTER" text="Welcome to Educonnect. Access course materials, take quizzes, collaborate on discussions, and get real-time feedback from lecturers all in one platform." textAlignment="CENTER" textFill="#64748b" wrapText="true">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+
+                <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10 0 0 0;">
+                    <children>
+                        <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#handleGetStarted" styleClass="button-primary" text="Create Account" />
+                        <Button fx:id="signInButton" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-secondary" text="Sign In" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <!-- Feature Cards Section -->
+        <HBox alignment="CENTER" layoutX="50.0" layoutY="450.0" spacing="25.0">
+            <children>
+                <!-- Card 1 -->
+                <VBox prefHeight="180.0" prefWidth="285.0" styleClass="feature-card" spacing="10.0">
+                    <children>
+                        <Label text="📚" />
+                        <Label text="Course Materials" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label text="Access lecture notes, assignments, and study resources uploaded by course instructors." textFill="#64748b" wrapText="true">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <!-- Card 2 -->
+                <VBox prefHeight="180.0" prefWidth="285.0" styleClass="feature-card" spacing="10.0">
+                    <children>
+                        <Label text="📝" />
+                        <Label text="Quizzes &amp; Assessments" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label text="Attempt interactive quizzes and monitor academic progress directly from the dashboard." textFill="#64748b" wrapText="true">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <!-- Card 3 -->
+                <VBox prefHeight="180.0" prefWidth="285.0" styleClass="feature-card" spacing="10.0">
+                    <children>
+                        <Label text="💬" />
+                        <Label text="Interactive Forum" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label text="Engage in peer-to-peer discussion threads, clear doubts, and connect with lecturers." textFill="#64748b" wrapText="true">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

@@ -22,21 +22,29 @@
         <Label text="Username">
             <font><Font name="System Bold" size="12.0" /></font>
         </Label>
-        <TextField fx:id="usernameField" promptText="Enter username..." />
+        <TextField fx:id="emailField" promptText="Enter Email" />
     </VBox>
 
     <VBox alignment="CENTER_LEFT" spacing="5.0">
         <Label text="Password">
             <font><Font name="System Bold" size="12.0" /></font>
         </Label>
-        <PasswordField fx:id="passwordField" promptText="Enter password..." />
+
+        <!-- StackPane handling the password toggle view -->
+        <StackPane alignment="CENTER_RIGHT">
+            <children>
+                <PasswordField fx:id="passwordField" promptText="Enter Password" />
+                <TextField fx:id="visiblePasswordField" promptText="Enter Password" visible="false" managed="false" />
+                <Button fx:id="togglePasswordButton" mnemonicParsing="false" onAction="#handleTogglePassword" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #64748b; -fx-padding: 0 10 0 0;" text="Show" />
+            </children>
+        </StackPane>
     </VBox>
 
     <Label fx:id="statusLabel" text="" textFill="#dc3545" wrapText="true">
         <font><Font size="12.0" /></font>
     </Label>
 
-    <Button fx:id="actionButton" onAction="#handleAction" prefWidth="200.0" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
+    <Button fx:id="actionButton" onAction="#handleLoginButtonAction" prefWidth="200.0" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
 
-    <Hyperlink fx:id="toggleModeLink" onAction="#handleToggleMode" text="Need an account? Register" />
+    <Hyperlink fx:id="toggleModeLink" text="Need an account? Register" />
 </VBox>

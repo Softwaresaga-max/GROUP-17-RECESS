@@ -110,8 +110,11 @@ public class DatabaseHandler {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            boolean found = rs.next();
+            System.out.println("Debug - Authenticating user '" + username + "': Found = " + found);
+            return found;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -393,7 +396,64 @@ public class DatabaseHandler {
         }
         return total;
     }
+    public static String authenticateAndGetRole(String username, String password) {
+        // 1. Check for Admin first
+        if (username.equals("admin") && password.equals("admin123")) {
+            return "ADMIN";
+        }
 
+        // 2. Check for Student pattern (Password starts with STU-2026-)
+        if (password != null && password.startsWith("STU-2026-")) {
+            String query = "SELECT role FROM users WHERE username = ? AND password = ?";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("role");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // If they match the pattern and username exists in DB or you want to allow dynamic valid entries:
+            return "STUDENT";
+        }
+
+        // 3. Check for Lecturer pattern (Password starts with LEC-2026-)
+        if (password != null && password.startsWith("LEC-2026-")) {
+            String query = "SELECT role FROM users WHERE username = ? AND password = ?";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("role");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // If they match the pattern:
+            return "LECTURER";
+        }
+
+        // Fallback standard database check
+        String standardQuery = "SELECT role FROM users WHERE username = ? AND password = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(standardQuery)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("role");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null; // Login failed
+    }
     public static int markAllAsSynced() {
         String syncPosts = "UPDATE posts SET synced = 1 WHERE synced = 0";
         String syncComments = "UPDATE comments SET synced = 1 WHERE synced = 0";
