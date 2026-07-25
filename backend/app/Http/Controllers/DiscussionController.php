@@ -87,22 +87,22 @@ public function store(Request $request)
 }
 
     
-
-    public function show(Discussion $discussion)
+public function show(Discussion $discussion)
 {
     $discussion->increment('views');
 
-    $discussion->load([
-        'user',
-        'replies.user'
-    ]);
+    $userId = auth()->id();
 
-    return view(
-        'discussions.show',
-        compact('discussion')
-    );
+    $visiblePosts = $discussion->posts()
+        ->with('user')
+        ->whereDoesntHave('excludedUsers', function ($q) use ($userId) {
+            $q->where('users.id', $userId);
+        })
+        ->latest()
+        ->get();
+
+    return view('discussions.show', compact('discussion', 'visiblePosts'));
 }
-
 
     public function edit(Discussion $discussion)
     {

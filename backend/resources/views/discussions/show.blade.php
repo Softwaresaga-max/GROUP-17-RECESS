@@ -25,7 +25,7 @@
 
     <h3>Replies</h3>
 
-   @forelse($discussion->posts as $reply)        <div style="padding:15px;border:1px solid #ddd;margin-bottom:10px;border-radius:8px;">
+ @forelse($visiblePosts as $reply)       <div style="padding:15px;border:1px solid #ddd;margin-bottom:10px;border-radius:8px;">
 
             <strong>{{ $reply->user->name }}</strong>
 
@@ -51,25 +51,38 @@
 
     <h3>Write a Reply</h3>
 
-    <form method="POST"
-          action="{{ route('posts.store', $discussion) }}">
-        @csrf
+<form method="POST"
+      action="{{ route('posts.store', $discussion) }}">
 
-        <textarea
-            name="content"
-            rows="5"
-            style="width:100%;padding:10px;"
-            placeholder="Write your reply..."
-            required></textarea>
+    @csrf
 
-        <br><br>
+    <textarea
+        name="content"
+        rows="5"
+        style="width:100%;padding:10px;"
+        placeholder="Write your reply..."
+        required></textarea>
 
-        <button type="submit">
-            Post Reply
-        </button>
+    <br><br>
 
-    </form>
+    <p><strong>Hide this reply from:</strong></p>
 
+    @foreach($discussion->group->users as $member)
+        @if($member->id !== auth()->id())
+            <label style="display:block; margin-bottom:4px;">
+                <input type="checkbox" name="excluded_user_ids[]" value="{{ $member->id }}">
+                {{ $member->name }}
+            </label>
+        @endif
+    @endforeach
+
+    <br>
+
+    <button type="submit">
+        Post Reply
+    </button>
+
+</form>
 </div>
 
 </x-app-sidebar>
