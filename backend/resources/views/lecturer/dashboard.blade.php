@@ -55,6 +55,18 @@
         <div class="subtitle">View student performance</div>
     </a>
 
+    <a href="{{ route('progress.index') }}"
+   class="card"
+   style="text-decoration:none; color:inherit;">
+
+    <div class="title">📈 Student Progress</div>
+
+    <div class="subtitle">
+        Monitor academic performance
+    </div>
+
+</a>
+
     <a href="{{ route('materials.create') }}" 
 class="card" 
 style="text-decoration:none;color:inherit;">

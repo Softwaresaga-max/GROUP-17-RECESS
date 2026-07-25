@@ -30,6 +30,12 @@ class AuthenticatedSessionController extends Controller
 
     $user = $request->user();
 
+    \App\Models\ActivityLog::create([
+    'user_id' => $user->id,
+    'activity' => 'Logged in',
+    'performed_at' => now(),
+]);
+
     if ($user->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }

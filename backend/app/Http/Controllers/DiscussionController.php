@@ -65,6 +65,12 @@ class DiscussionController extends Controller
 
         ]);
 
+     \App\Models\ActivityLog::create([
+    'user_id' => auth()->id(),
+    'activity' => 'Created a discussion',
+    'performed_at' => now(),
+]);
+
 
 
         return redirect()

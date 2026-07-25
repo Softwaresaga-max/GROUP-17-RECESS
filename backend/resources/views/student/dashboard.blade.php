@@ -51,22 +51,37 @@
 <div class="grid">
 
 
-    <!-- Courses -->
+   <!-- Courses -->
 
-    <a href="{{ route('courses.index') }}"
-       class="card"
-       style="text-decoration:none;color:inherit;">
+<a href="{{ route('courses.index') }}"
+   class="card"
+   style="text-decoration:none;color:inherit;">
 
-        <div class="title">
-            📚 Courses
-        </div>
+    <div class="title">
+        📚 My Course
+    </div>
+
+    @if($course)
 
         <div class="subtitle">
-            Access your enrolled courses
+            {{ $course->name }}
         </div>
 
-    </a>
+        @if($classRoom)
+            <div class="subtitle">
+                Class: {{ $classRoom->name }}
+            </div>
+        @endif
 
+    @else
+
+        <div class="subtitle">
+            No course assigned yet
+        </div>
+
+    @endif
+
+</a>
 
 
     <!-- Discussion Groups -->

@@ -15,6 +15,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\DiscussionReplyController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ClassRoomController;
+use App\Http\Controllers\ProgressController;
 
 
 /*
@@ -33,6 +34,10 @@ Route::get('/', function () {
 | Dashboard Redirect
 |--------------------------------------------------------------------------
 */
+
+Route::get('/progress', [ProgressController::class, 'index'])
+    ->middleware('auth')
+    ->name('progress.index');
 
 Route::get('/dashboard', function () {
 
@@ -260,7 +265,9 @@ Route::get('/dashboard', function () {
         [LecturerDashboardController::class,'analytics'])
         ->name('lecturer.analytics');
 
-
+    Route::get('/lecturer/progress',
+    [LecturerDashboardController::class, 'progress'])
+    ->name('lecturer.progress');
 
     /*
     |--------------------------------------------------------------------------

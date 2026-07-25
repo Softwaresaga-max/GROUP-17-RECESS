@@ -89,4 +89,52 @@ class LecturerDashboardController extends Controller
 
     }
 
+    public function progress()
+{
+    $students = User::where('role', 'student')
+        ->with([
+            'course',
+            'classRoom',
+            'discussions',
+            'discussionReplies',
+            'attempts'
+        ])
+        ->get();
+
+    foreach ($students as $student) {
+
+        $student->discussion_count = $student->discussions->count();
+
+        $student->reply_count = $student->discussionReplies->count();
+
+        $student->quiz_attempts = $student->attempts->count();
+
+        $student->average_score = round(
+            $student->attempts->avg('score') ?? 0,
+            2
+        );
+
+        if ($student->average_score >= 80) {
+
+            $student->status = 'Excellent';
+
+        } elseif ($student->average_score >= 60) {
+
+            $student->status = 'Good';
+
+        } elseif ($student->average_score >= 40) {
+
+            $student->status = 'Fair';
+
+        } else {
+
+            $student->status = 'Needs Improvement';
+
+        }
+
+    }
+
+    return view('lecturer.progress', compact('students'));
+}
+
 }

@@ -21,6 +21,14 @@ class DiscussionReplyController extends Controller
             'content' => $request->content,
         ]);
 
+
+        \App\Models\ActivityLog::create([
+            'user_id' => Auth::id(),
+            'activity' => 'Replied to a discussion',
+            'performed_at' => now(),
+        ]);
+
+
         return back()->with('success', 'Reply posted successfully.');
     }
 }
