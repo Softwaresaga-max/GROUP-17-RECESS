@@ -5,6 +5,16 @@
 
 @if(session('success'))
 
+@if($errors->any())
+    <div style="background:#fdecea; color:#611a15; padding:12px; border-radius:6px; margin-bottom:15px;">
+        <ul style="margin:0; padding-left:20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div>
     {{ session('success') }}
 </div>
