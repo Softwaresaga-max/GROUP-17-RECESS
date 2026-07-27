@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="350.0" prefWidth="400.0" spacing="12.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.LoginController">
+<VBox alignment="CENTER" prefHeight="420.0" prefWidth="400.0" spacing="12.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.LoginController">
     <padding>
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
     </padding>
@@ -19,10 +19,10 @@
     <Label text="Sign in to your account" textFill="#666666" />
 
     <VBox alignment="CENTER_LEFT" spacing="5.0">
-        <Label text="Username">
+        <Label text="Username / Email">
             <font><Font name="System Bold" size="12.0" /></font>
         </Label>
-        <TextField fx:id="emailField" promptText="Enter Email" />
+        <TextField fx:id="emailField" promptText="Enter Email or Username" />
     </VBox>
 
     <VBox alignment="CENTER_LEFT" spacing="5.0">
@@ -40,11 +40,19 @@
         </StackPane>
     </VBox>
 
+    <!-- Role Selection Dropdown -->
+    <VBox alignment="CENTER_LEFT" spacing="5.0">
+        <Label text="Select Role">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <ComboBox fx:id="roleComboBox" prefWidth="340.0" promptText="Choose Role (Student/Lecturer/Admin)" />
+    </VBox>
+
     <Label fx:id="statusLabel" text="" textFill="#dc3545" wrapText="true">
         <font><Font size="12.0" /></font>
     </Label>
 
     <Button fx:id="actionButton" onAction="#handleLoginButtonAction" prefWidth="200.0" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
 
-    <Hyperlink fx:id="toggleModeLink" text="Need an account? Register" />
+    <Hyperlink fx:id="toggleModeLink" onAction="#handleCreateAccountButton" text="Need an account? Register" />
 </VBox>

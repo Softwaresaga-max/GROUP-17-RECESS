@@ -12,17 +12,22 @@ public class AdminDashboardController {
     private Button logoutButton;
 
     @FXML
+    public void initialize() {
+        System.out.println("Admin Dashboard initialized successfully.");
+    }
+
+    @FXML
     private void handleLogout() {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/welcome.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
             Scene scene = new Scene(loader.load());
-            stage.setTitle("EduConnect - Streamlining Communication");
+            stage.setTitle("EduConnect - Login");
             stage.setScene(scene);
             stage.centerOnScreen();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Failed to load welcome view.");
+            System.out.println("Failed to return to login view from Admin Dashboard.");
         }
     }
 }

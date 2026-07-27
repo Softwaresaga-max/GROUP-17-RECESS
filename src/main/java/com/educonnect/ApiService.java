@@ -4,70 +4,82 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 
 public class ApiService {
     private static final String BASE_URL = "http://127.0.0.1:8000/api";
-    private static final HttpClient client = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(10))
-            .build();
+    private static final HttpClient client = HttpClient.newHttpClient();
 
-    private static String authToken = null;
-
-    public static void setAuthToken(String token) {
-        authToken = token;
-    }
-
-    public static String sendGet(String endpoint) {
+    public static String login(String email, String password) {
         try {
-            HttpRequest.Builder builder = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL + endpoint))
-                    .GET();
+            String jsonInputString = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
-            if (authToken != null) {
-                builder.header("Authorization", "Bearer " + authToken);
-            }
-
-            HttpResponse<String> response = client.send(builder.build(), HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String sendPost(String endpoint, String jsonBody) {
-        try {
-            HttpRequest.Builder builder = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL + endpoint))
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/login"))
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
+                    .build();
 
-            if (authToken != null) {
-                builder.header("Authorization", "Bearer " + authToken);
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return response.body();
             }
-
-            HttpResponse<String> response = client.send(builder.build(), HttpResponse.BodyHandlers.ofString());
-            return response.body();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            System.err.println("Login API error: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String getQuestions(int quizId) {
+        return sendGetRequest("/quiz/questions/" + quizId);
+    }
+
+    public static String getCourses() {
+        return sendGetRequest("/courses");
+    }
+
+    public static String getQuizzes() {
+        return sendGetRequest("/quizzes");
+    }
+
+    // Fetch posts from Laravel backend
+    public static String getPosts() {
+        return sendGetRequest("/posts");
+    }
+
+    // Create post on Laravel backend
+    public static boolean createPost(String content) {
+        try {
+            String jsonPayload = "{\"content\":\"" + content + "\"}";
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/posts"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.statusCode() == 201 || response.statusCode() == 200;
+        } catch (Exception e) {
+            System.err.println("Create post API error: " + e.getMessage());
+            return false;
         }
     }
 
-    // Method for fetching posts from Laravel
-    public static String getPosts() {
-        return sendGet("/posts");
-    }
+    private static String sendGetRequest(String endpoint) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + endpoint))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
 
-    // Method for creating a new post
-    public static String createPost(String title, String content) {
-        String jsonBody = "{\"title\":\"" + title + "\", \"content\":\"" + content + "\"}";
-        return sendPost("/posts", jsonBody);
-    }
-
-    // Method for fetching quizzes from Laravel
-    public static String getQuizzes() {
-        return sendGet("/quizzes");
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return response.body();
+            }
+        } catch (Exception e) {
+            System.err.println("Backend connection failed for " + endpoint + ": " + e.getMessage());
+        }
+        return null;
     }
 }

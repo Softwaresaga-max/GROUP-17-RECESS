@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.StudentDashboardController">
+<AnchorPane prefHeight="680.0" prefWidth="800.0" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.StudentDashboardController">
     <children>
-        <VBox alignment="CENTER" layoutX="50.0" layoutY="40.0" spacing="5.0">
+        <VBox alignment="CENTER_LEFT" layoutX="50.0" layoutY="20.0" spacing="3.0">
             <children>
                 <Label text="🎓 Student Dashboard" textFill="#1e293b">
                     <font>
@@ -23,35 +23,58 @@
             </children>
         </VBox>
 
-        <AnchorPane layoutX="50.0" layoutY="120.0" prefHeight="430.0" prefWidth="700.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);">
+        <AnchorPane layoutX="50.0" layoutY="90.0" prefHeight="560.0" prefWidth="700.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);">
             <children>
-                <Label layoutX="30.0" layoutY="30.0" text="Quick Navigation" textFill="#1e293b">
+                <Label layoutX="30.0" layoutY="25.0" text="Quick Navigation &amp; Engagement" textFill="#1e293b">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
 
-                <Button fx:id="logoutButton" layoutX="560.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 6;" text="Logout">
+                <Button fx:id="logoutButton" layoutX="590.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 6;" text="Log Out">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
 
-                <Label layoutX="30.0" layoutY="100.0" text="• Access discussion forums and collaborate with peers." textFill="#475569">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="140.0" text="• Take quizzes and review your academic progress." textFill="#475569">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="180.0" text="• View announcements from your lecturers." textFill="#475569">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
+                <!-- Interactive Engagement Option 1: Announcements -->
+                <AnchorPane layoutX="30.0" layoutY="85.0" prefHeight="130.0" prefWidth="640.0" style="-fx-background-color: #f1f5f9; -fx-background-radius: 8;">
+                    <children>
+                        <Label layoutX="20.0" layoutY="15.0" text="📢 Lecturer Announcements" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="40.0" text="View updates, course materials, and announcements posted by your lecturers." textFill="#64748b" />
+                        <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleViewAnnouncements" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;" text="View Announcements" />
+                    </children>
+                </AnchorPane>
+
+                <!-- Interactive Engagement Option 2: Discussion Forums -->
+                <AnchorPane layoutX="30.0" layoutY="230.0" prefHeight="130.0" prefWidth="640.0" style="-fx-background-color: #f1f5f9; -fx-background-radius: 8;">
+                    <children>
+                        <Label layoutX="20.0" layoutY="15.0" text="💬 Discussion Forums" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="40.0" text="Access discussion forums and collaborate with peers on course topics." textFill="#64748b" />
+                        <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleOpenForums" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;" text="Open Forums" />
+                    </children>
+                </AnchorPane>
+
+                <!-- Interactive Engagement Option 3: Quizzes -->
+                <AnchorPane layoutX="30.0" layoutY="375.0" prefHeight="130.0" prefWidth="640.0" style="-fx-background-color: #f1f5f9; -fx-background-radius: 8;">
+                    <children>
+                        <Label layoutX="20.0" layoutY="15.0" text="📝 Quizzes &amp; Assessments" textFill="#1e293b">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="40.0" text="Take quizzes, test your knowledge, and review your academic progress." textFill="#64748b" />
+                        <Button fx:id="attemptQuizButton" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleTakeQuiz" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;" text="Attempt Quiz" />
+                    </children>
+                </AnchorPane>
             </children>
         </AnchorPane>
     </children>

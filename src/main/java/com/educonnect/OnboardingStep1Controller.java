@@ -12,6 +12,11 @@ public class OnboardingStep1Controller {
     private Button nextButton;
 
     @FXML
+    public void initialize() {
+        // Onboarding Step 1 initialization (no API calls here)
+    }
+
+    @FXML
     private void handleNext() {
         try {
             Stage stage = (Stage) nextButton.getScene().getWindow();

@@ -1,7 +1,10 @@
 package com.educonnect;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -15,32 +18,39 @@ public class OnboardingStep3Controller {
     private Button finishButton;
 
     @FXML
-    private void handleBack() {
+    private void handleBack(ActionEvent event) {
         try {
-            Stage stage = (Stage) backButton.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/onboarding_step2.fxml"));
-            Scene scene = new Scene(loader.load());
-            stage.setTitle("EduConnect - Onboarding Step 2");
-            stage.setScene(scene);
-            stage.centerOnScreen();
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Failed to load Onboarding Step 2.");
         }
     }
 
     @FXML
     private void handleFinish() {
         try {
+            // Fetch courses from Laravel backend right when onboarding finishes
+            String coursesResponse = ApiService.getCourses();
+            if (coursesResponse != null) {
+                System.out.println("Courses fetched successfully from Laravel after completing onboarding!");
+            }
+
             Stage stage = (Stage) finishButton.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/student_dashboard.fxml"));
-            Scene scene = new Scene(loader.load());
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
             stage.setTitle("EduConnect - Student Dashboard");
-            stage.setScene(scene);
             stage.centerOnScreen();
+            stage.show();
+
+            System.out.println("Onboarding completed successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Failed to load Student Dashboard view. Make sure student_dashboard.fxml exists.");
+            System.out.println("Failed to load Student Dashboard FXML file. Check path.");
         }
     }
 }

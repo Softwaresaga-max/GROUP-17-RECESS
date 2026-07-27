@@ -11,6 +11,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Initialize the local SQLite database on app startup for offline storage
+        LocalDatabaseService.initializeDatabase();
+
         // Load the new modern welcome landing page first
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/welcome.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 700);

@@ -249,7 +249,7 @@ public class DashboardController {
             Parent root = loader.load();
 
             AnalyticsController analyticsController = loader.getController();
-            analyticsController.loadData(currentUsername);
+            analyticsController.initialize();
 
             Stage stage = new Stage();
             stage.setTitle("EduConnect - Engagement Analytics");
