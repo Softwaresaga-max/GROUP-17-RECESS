@@ -64,11 +64,50 @@
     <a href="{{ route('admin.users') }}" class="card" style="text-decoration:none; color:inherit;">
     <div class="title">👥 Manage Users</div>
     <div class="subtitle">Change student, lecturer and admin roles</div>
+    
+</a>
+
+<a href="{{ route('admin.courses.index') }}" 
+   class="card" 
+   style="text-decoration:none; color:inherit;">
+
+    <div class="title">
+        📚 Manage Courses
+    </div>
+
+    <div class="subtitle">
+        Create and manage academic courses
+    </div>
+
+</a>
+
+<a href="{{ route('admin.classrooms.index') }}"
+class="card"
+style="text-decoration:none;color:inherit;">
+
+<div class="title">
+🏫 Manage Classes
+</div>
+
+<div class="subtitle">
+Create and manage student classes
+</div>
+
 </a>
 
     <a href="{{ route('admin.reports') }}" class="card" style="text-decoration:none; color:inherit;">
     <div class="title">📊 Reports</div>
     <div class="subtitle">System analytics & usage data</div>
+</a>
+
+    <a href="{{ route('admin.groupStats') }}" class="card" style="text-decoration:none; color:inherit;">
+    <div class="title">📈 Group Statistics</div>
+    <div class="subtitle">Per-group activity breakdown</div>
+</a>
+
+     <a href="{{ route('admin.participationGrades') }}" class="card" style="text-decoration:none; color:inherit;">
+    <div class="title">🏆 Participation Grades</div>
+    <div class="subtitle">Configurable scoring per group</div>
 </a>
 
     <a href="{{ route('admin.settings') }}" class="card" style="text-decoration:none; color:inherit;">
@@ -79,9 +118,10 @@
 
 <div class="grid">
 
-    <a href="{{ route('admin.users') }}" class="card" style="text-decoration:none; color:inherit;">
-    <div class="title">👥 Manage Users</div>
-    <div class="subtitle">Change student, lecturer and admin roles</div>
+
+    <a href="{{ route('admin.groups') }}" class="card" style="text-decoration:none; color:inherit;">
+    <div class="title">👨‍👩‍👧‍👦 Manage Groups</div>
+    <div class="subtitle">Create, edit and delete discussion groups</div>
 </a>
 
     <a href="{{ route('discussions.index') }}" class="card" style="text-decoration:none; color:inherit;">

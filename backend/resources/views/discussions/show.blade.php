@@ -1,9 +1,123 @@
 <x-app-sidebar>
 
-<h2>{{ $discussion->title }}</h2>
+@if(session('error'))
+    <div class="alert alert-danger" style="background:#fdecea; color:#611a15; padding:12px; border-radius:6px; margin-bottom:15px;">
+        {{ session('error') }}
+    </div>
+@endif
 
-<p>{{ $discussion->content }}</p>
+@if(session('success'))
+    <div class="alert alert-success" style="background:#e6f4ea; color:#1e4620; padding:12px; border-radius:6px; margin-bottom:15px;">
+        {{ session('success') }}
+    </div>
+@endif
 
-<small>Author: {{ $discussion->user->name ?? 'Unknown' }}</small>
+<div style="max-width:900px;margin:auto;">
+
+    <h2>{{ $discussion->title }}</h2>
+
+    <p>{{ $discussion->content }}</p>
+
+    <p>
+        <strong>Author:</strong>
+        {{ $discussion->user->name ?? 'Unknown' }}
+    </p>
+
+    <p>
+        <strong>Views:</strong>
+        {{ $discussion->views }}
+    </p>
+
+    <a href="{{ route('discussions.pdf', $discussion->id) }}"
+       class="btn btn-danger">
+        Export PDF
+    </a>
+
+    <div style="margin-top:15px;">
+    <strong>Share this discussion:</strong>
+    <br><br>
+
+    <a href="https://api.whatsapp.com/send?text={{ urlencode($discussion->title . ' - ' . route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#25D366; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; margin-right:8px;">
+        WhatsApp
+    </a>
+
+    <a href="https://twitter.com/intent/tweet?text={{ urlencode($discussion->title) }}&url={{ urlencode(route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#1DA1F2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; margin-right:8px;">
+        Twitter/X
+    </a>
+
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('discussions.show', $discussion)) }}"
+       target="_blank"
+       style="background:#1877F2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
+        Facebook
+    </a>
+</div> 
+
+    <hr>
+
+    <h3>Replies</h3>
+
+ @forelse($visiblePosts as $reply)       <div style="padding:15px;border:1px solid #ddd;margin-bottom:10px;border-radius:8px;">
+
+            <strong>{{ $reply->user->name }}</strong>
+
+            <br><br>
+
+            {{ $reply->content }}
+
+            <br><br>
+
+            <small>
+                {{ $reply->created_at->diffForHumans() }}
+            </small>
+
+        </div>
+
+    @empty
+
+        <p>No replies yet.</p>
+
+    @endforelse
+
+    <hr>
+
+    <h3>Write a Reply</h3>
+
+<form method="POST"
+      action="{{ route('posts.store', $discussion) }}">
+
+    @csrf
+
+    <textarea
+        name="content"
+        rows="5"
+        style="width:100%;padding:10px;"
+        placeholder="Write your reply..."
+        required></textarea>
+
+    <br><br>
+
+    <p><strong>Hide this reply from:</strong></p>
+
+    @foreach($discussion->group->users as $member)
+        @if($member->id !== auth()->id())
+            <label style="display:block; margin-bottom:4px;">
+                <input type="checkbox" name="excluded_user_ids[]" value="{{ $member->id }}">
+                {{ $member->name }}
+            </label>
+        @endif
+    @endforeach
+
+    <br>
+
+    <button type="submit">
+        Post Reply
+    </button>
+
+</form>
+</div>
 
 </x-app-sidebar>

@@ -5,14 +5,29 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Models\ClassRoom;
 
 class UserController extends Controller
 {
     // ✅ GET ALL USERS
-    public function index()
-    {
-        return response()->json(User::all());
-    }
+ public function index()
+{
+    $users = User::with(['course','classRoom'])
+        ->latest()
+        ->get();
+
+    $courses = Course::all();
+
+    $classRooms = ClassRoom::all();
+
+
+    return view('admin.users', compact(
+        'users',
+        'courses',
+        'classRooms'
+    ));
+}
 
     // ✅ CREATE USER
     public function store(Request $request)
@@ -38,24 +53,14 @@ class UserController extends Controller
     }
 
     // ✅ DELETE USER
-    public function destroy($id)
-    {
-        $user = User::find($id);
+public function destroy(User $user)
+{
+    $user->delete();
 
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'User not found'
-            ], 404);
-        }
-
-        $user->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User deleted successfully'
-        ]);
-    }
+    return redirect()
+        ->route('admin.users')
+        ->with('success', 'User deleted successfully.');
+}
 
     // ✅ 🔥 ASSIGN STUDENT TO CLASS
 public function assignStudent(Request $request)
@@ -88,4 +93,41 @@ public function assignStudent(Request $request)
         'data' => $user
     ]);
 }
+
+public function updateRole(Request $request, User $user)
+{
+    $request->validate([
+        'role' => 'required|in:admin,lecturer,student',
+    ]);
+
+    $user->update([
+        'role' => $request->role,
+    ]);
+
+    return redirect()
+        ->route('admin.users')
+        ->with('success', 'User role updated successfully.');
+}
+
+public function assignCourse(Request $request, User $user)
+{
+    $request->validate([
+        'course_id' => 'required|exists:courses,id',
+        'class_room_id' => 'required|exists:class_rooms,id',
+    ]);
+
+
+    $user->update([
+
+        'course_id' => $request->course_id,
+
+        'class_room_id' => $request->class_room_id,
+
+    ]);
+
+
+    return back()
+        ->with('success','Student course and class assigned successfully');
+}
+
 }

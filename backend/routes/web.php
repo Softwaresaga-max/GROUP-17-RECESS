@@ -11,7 +11,13 @@ use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GroupController;
-
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\DiscussionReplyController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\ClassRoomController;
+use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +35,10 @@ Route::get('/', function () {
 | Dashboard Redirect
 |--------------------------------------------------------------------------
 */
+
+Route::get('/progress', [ProgressController::class, 'index'])
+    ->middleware('auth')
+    ->name('progress.index');
 
 Route::get('/dashboard', function () {
 
@@ -60,7 +70,7 @@ Route::get('/dashboard', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+   Route::middleware(['auth','blacklist'])->group(function () {
 
 
     /*
@@ -69,6 +79,7 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
+    
     Route::get('/admin/dashboard',
         [AdminDashboardController::class,'index'])
         ->middleware(['role:admin','onboarding'])
@@ -177,9 +188,32 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::resource('discussions', DiscussionController::class);
+   Route::resource('discussions', DiscussionController::class)
+    ->except(['store']);
+
+Route::post('/discussions', [DiscussionController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('discussions.store');
+
+Route::post(
+    '/discussions/{discussion}/posts',
+    [PostController::class, 'store']
+)->middleware('throttle:5,1')
+ ->name('posts.store');
+
+    Route::get(
+    '/discussions/{discussion}/pdf',
+    [PdfController::class, 'discussionPdf']
+)->name('discussions.pdf');
+
+    Route::post(
+    '/discussions/{discussion}/reply',
+    [DiscussionReplyController::class, 'store']
+)->name('discussion.reply');
 
 
+     Route::post('/notifications/mark-read', [NotificationController::class, 'markAllRead'])
+    ->name('notifications.markRead');
 
     /*
     |--------------------------------------------------------------------------
@@ -246,7 +280,9 @@ Route::middleware('auth')->group(function () {
         [LecturerDashboardController::class,'analytics'])
         ->name('lecturer.analytics');
 
-
+    Route::get('/lecturer/progress',
+    [LecturerDashboardController::class, 'progress'])
+    ->name('lecturer.progress');
 
     /*
     |--------------------------------------------------------------------------
@@ -353,10 +389,61 @@ Route::middleware('auth')->group(function(){
 | Admin Management
 |--------------------------------------------------------------------------
 */
+Route::post(
+    'users/{user}/assign-course',
+    [UserController::class,'assignCourse']
+)->name('admin.users.assignCourse');
+
+Route::middleware(['auth'])
+->prefix('admin')
+->group(function(){
+
+
+    Route::resource(
+        'classrooms',
+        ClassRoomController::class
+    )->names('admin.classrooms');
+
+
+});
+
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+
+    Route::resource(
+        'courses',
+        CourseController::class
+    )->names('admin.courses');
+
+});
 
 Route::middleware(['auth','role:admin'])
 ->prefix('admin')
 ->group(function(){
+
+    Route::get('/groups', [GroupController::class, 'index'])
+    ->name('admin.groups');
+
+    Route::get('/group-stats', [AdminDashboardController::class, 'groupStats'])
+    ->name('admin.groupStats');
+
+    Route::get('/participation-grades', [AdminDashboardController::class, 'participationScores'])
+    ->name('admin.participationGrades');
+
+
+Route::get('/groups/create', [GroupController::class, 'create'])
+    ->name('admin.groups.create');
+
+Route::post('/groups', [GroupController::class, 'store'])
+    ->name('admin.groups.store');
+
+Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])
+    ->name('admin.groups.edit');
+
+Route::put('/groups/{group}', [GroupController::class, 'update'])
+    ->name('admin.groups.update');
+
+Route::delete('/groups/{group}', [GroupController::class, 'destroy'])
+    ->name('admin.groups.destroy');
 
 
     Route::get('/reports',
@@ -396,10 +483,7 @@ Route::middleware(['auth','role:admin'])
 
 Route::middleware('auth')->group(function(){
 
-Route::resource(
-    'discussions',
-    DiscussionController::class
-);
+
 
 
     Route::middleware('role:lecturer')->group(function(){

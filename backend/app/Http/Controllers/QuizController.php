@@ -17,33 +17,36 @@ class QuizController extends Controller
      * Lecturer view own quizzes
      * Students view published quizzes
      */
-    public function index()
+public function index()
 {
-    if (Auth::user()->role == 'lecturer') {
+    $user = Auth::user();
 
-        $quizzes = Quiz::where('user_id', Auth::id())
-            ->with('questions')
+
+    // Admin and Lecturer see quizzes
+    if ($user->role == 'admin' || $user->role == 'lecturer') {
+
+        $quizzes = Quiz::with('questions')
             ->latest()
             ->get();
 
-        return view('quizzes.index', compact('quizzes'));
 
+        return view('quizzes.index', compact('quizzes'));
     }
 
 
-    // Students see only their assigned quizzes
+
+    // Students see assigned quizzes
 
     $quizzes = Quiz::where('status', 'published')
         ->where('is_active', 1)
-        ->where('course_id', Auth::user()->course_id)
-        ->where('class_room_id', Auth::user()->class_room_id)
+        ->where('course_id', $user->course_id)
+        ->where('class_room_id', $user->class_room_id)
         ->latest()
         ->get();
 
 
     return view('student.quizzes', compact('quizzes'));
 }
-
 
     /**
      * Show quiz questions for lecturer
@@ -239,6 +242,12 @@ public function create()
             'completed' => true,
         ]);
 
+        \App\Models\ActivityLog::create([
+    'user_id' => Auth::id(),
+    'activity' => 'Completed a quiz',
+    'performed_at' => now(),
+]);
+
         return view('student.result', [
             'quiz' => $quiz,
             'attempt' => $attempt
@@ -251,18 +260,24 @@ public function create()
      * Lecturer analytics
      */
     public function analytics(Quiz $quiz)
-    {
-        $attempts = $quiz->attempts()->with('user')->get();
+{
+    $attempts = $quiz->attempts()
+        ->with('user')
+        ->get();
 
-        $totalStudents = $attempts->count();
-        $averageScore = $attempts->avg('score');
+    $totalStudents = $attempts->count();
 
-        return view('lecturer.quiz.analytics', compact(
+    $averageScore = round($attempts->avg('score'), 2);
+
+    return view(
+        'lecturer.quiz.analytics',
+        compact(
             'quiz',
             'attempts',
             'totalStudents',
             'averageScore'
-        ));
-    }
+        )
+    );
+}
 
 }
