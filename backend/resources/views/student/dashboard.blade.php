@@ -157,6 +157,22 @@
 
     </a>
 
+    <!-- Quiz Results -->
+
+<a href="{{ route('student.results') }}"
+   class="card"
+   style="text-decoration:none;color:inherit;">
+
+    <div class="title">
+        📊 My Quiz Results
+    </div>
+
+    <div class="subtitle">
+        View your completed quizzes and performance
+    </div>
+
+</a>
+
 
 </div>
 

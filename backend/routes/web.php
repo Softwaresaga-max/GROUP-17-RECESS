@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\StudentResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +121,13 @@ Route::get('/dashboard', function () {
     */
 
     Route::middleware('role:student')->group(function(){
+        
+        Route::get('/student/results',
+    [StudentResultController::class,'index'])
+    ->name('student.results');
 
+        Route::get('/discussions/recommendations', [DiscussionController::class, 'recommendations'])
+    ->name('discussions.recommendations');
 
         Route::get('/student/quizzes',
             [QuizController::class,'index'])

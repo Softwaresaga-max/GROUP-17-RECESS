@@ -11,7 +11,15 @@
         Time Remaining: <strong id="timer"></strong>
     </div>
 
-    <form method="POST" action="{{ route('quizzes.submit', $quiz) }}" id="quizForm">
+    <p>
+Start: {{ $quiz->start_datetime }}
+</p>
+
+<p>
+End: {{ $quiz->end_datetime }}
+</p>
+
+<form method="POST" action="{{ route('quiz.submit', ['quiz'=>$quiz->id]) }}" id="quizForm">
         @csrf
 
         <input type="hidden" name="attempt_id" value="{{ $attempt->id }}">
@@ -55,7 +63,7 @@
 <script>
 
     // Convert Laravel time to JS
-    const endTime = new Date("{{ $quiz->end_datetime }}").getTime();
+    const endTime = new Date("{{ $quiz->end_datetime->format('Y-m-d\TH:i:s') }}").getTime();
 
     const timerEl = document.getElementById('timer');
     const form = document.getElementById('quizForm');
@@ -76,9 +84,8 @@
 
             alert("Time is up! Submitting your quiz...");
 
-            form.submit(); // AUTO SUBMIT
-
-            return;
+            console.log("AUTO SUBMIT TRIGGERED");
+return;
         }
 
         // Time calculations
