@@ -16,14 +16,30 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Dashboard
                     </x-nav-link>
+
+                    <x-nav-link :href="route('discussions.recommendations')" :active="request()->routeIs('discussions.recommendations')">
+                        Recommended
+                    </x-nav-link>
                 </div>
             </div>
-
-                 <!-- Notifications -->
+<!-- Notifications -->
 <div class="relative me-4" x-data="{ notifOpen: false }">
+
+    @php
+        $notifications = auth()->user()
+            ->notifications()
+            ->latest()
+            ->take(10)
+            ->get();
+
+        $unreadCount = $notifications
+            ->whereNull('read_at')
+            ->count();
+    @endphp
+
     <button @click="notifOpen = !notifOpen" class="relative p-2 text-gray-500 hover:text-gray-700">
         🔔
-        @php $unreadCount = auth()->user()->notifications()->whereNull('read_at')->count(); @endphp
+
         @if($unreadCount > 0)
             <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5">
                 {{ $unreadCount }}
@@ -31,29 +47,42 @@
         @endif
     </button>
 
-    <div x-show="notifOpen" @click.outside="notifOpen = false"
-         class="absolute right-0 mt-2 w-80 bg-white border rounded-md shadow-lg py-1 z-50" style="display: none;">
-        <div class="px-4 py-2 border-b flex justify-between items-center">
-            <span class="font-semibold text-sm">Notifications</span>
-            <form method="POST" action="{{ route('notifications.markRead') }}">
-                @csrf
-                <button type="submit" class="text-xs text-blue-600 hover:underline">Mark all read</button>
-            </form>
+
+    <div x-show="notifOpen"
+         @click.outside="notifOpen = false"
+         class="absolute right-0 mt-2 w-80 bg-white border rounded-md shadow-lg py-1 z-50"
+         style="display:none;">
+
+        <div class="px-4 py-2 border-b">
+            Notifications
         </div>
+
 
         <div class="max-h-96 overflow-y-auto">
-            @forelse(auth()->user()->notifications()->take(10)->get() as $notification)
-                <div class="px-4 py-2 text-sm border-b {{ $notification->read_at ? 'bg-white' : 'bg-blue-50' }}">
-                    {{ $notification->message }}
-                    <div class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</div>
-                </div>
-            @empty
-                <div class="px-4 py-3 text-sm text-gray-500">No notifications yet.</div>
-            @endforelse
-        </div>
-    </div>
-</div>
 
+            @forelse($notifications as $notification)
+
+                <div class="px-4 py-2 text-sm border-b">
+                    {{ $notification->message }}
+
+                    <div class="text-xs text-gray-400">
+                        {{ $notification->created_at->diffForHumans() }}
+                    </div>
+                </div>
+
+            @empty
+
+                <div class="px-4 py-3 text-sm text-gray-500">
+                    No notifications yet.
+                </div>
+
+            @endforelse
+
+        </div>
+
+    </div>
+
+</div>
             <!-- User Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -107,6 +136,9 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 Dashboard
             </x-responsive-nav-link>
+            <x-nav-link :href="route('student.results')">
+    My Results
+</x-nav-link>
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200">

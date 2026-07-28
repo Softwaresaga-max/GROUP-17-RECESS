@@ -161,6 +161,7 @@ public function create()
      */
     public function start(Quiz $quiz)
     {
+        
         // Check if quiz time is set
         if (!$quiz->start_datetime || !$quiz->end_datetime) {
             return redirect()->route('student.quizzes')

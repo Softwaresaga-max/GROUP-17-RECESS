@@ -44,12 +44,9 @@
 {{ $quiz->description }}
 </p>
 
-
 <p>
-<strong>Duration:</strong>
-{{ $quiz->duration }} minutes
+    <strong>Duration:</strong> Not available
 </p>
-
 
 <p>
 <strong>Questions:</strong>
