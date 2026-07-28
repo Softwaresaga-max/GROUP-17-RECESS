@@ -1,0 +1,175 @@
+package com.educonnect;
+
+        import javafx.fxml.FXML;
+        import javafx.fxml.FXMLLoader;
+        import javafx.scene.Scene;
+        import javafx.scene.control.Button;
+        import javafx.scene.control.Label;
+        import javafx.stage.Stage;
+
+        public class StudentDashboardController {
+
+
+        @FXML
+        private Label welcomeLabel;
+
+        @FXML
+        private Button logoutButton;
+
+        @FXML
+        private Button announcementButton;
+
+        @FXML
+        private Button forumButton;
+
+        @FXML
+        private Button quizButton;
+
+
+
+        // ================= INITIALIZE =================
+
+        @FXML
+        public void initialize(){
+
+        welcomeLabel.setText(
+        "Welcome back to EduConnect"
+        );
+
+        }
+
+
+
+        // ================= ANNOUNCEMENTS =================
+
+        @FXML
+        private void handleAnnouncements(){
+
+        System.out.println(
+        "Announcements page coming soon"
+        );
+
+        }
+
+
+
+        // ================= FORUMS =================
+
+        @FXML
+        private void handleForums(){
+
+        System.out.println(
+        "Forums page coming soon"
+        );
+
+        }
+
+
+
+        // ================= QUIZZES =================
+
+        @FXML
+        private void handleQuiz(){
+
+        try{
+
+        FXMLLoader loader =
+        new FXMLLoader(
+        getClass()
+        .getResource(
+        "/view/quiz.fxml"
+        )
+        );
+
+
+        Scene scene =
+        new Scene(
+        loader.load()
+        );
+
+
+        Stage stage =
+        (Stage)
+        quizButton
+        .getScene()
+        .getWindow();
+
+
+        stage.setTitle(
+        "EduConnect - Quiz"
+        );
+
+
+        stage.setScene(scene);
+
+        stage.centerOnScreen();
+
+
+        }
+        catch(Exception e){
+
+        System.out.println(
+        "Failed opening quiz page"
+        );
+
+        e.printStackTrace();
+
+        }
+
+        }
+
+
+
+        // ================= LOGOUT =================
+
+        @FXML
+        private void handleLogout(){
+
+        try{
+
+        FXMLLoader loader =
+        new FXMLLoader(
+        getClass()
+        .getResource(
+        "/view/login.fxml"
+        )
+        );
+
+
+        Scene scene =
+        new Scene(
+        loader.load()
+        );
+
+
+        Stage stage =
+        (Stage)
+        logoutButton
+        .getScene()
+        .getWindow();
+
+
+        stage.setTitle(
+        "EduConnect - Login"
+        );
+
+
+        stage.setScene(scene);
+
+        stage.centerOnScreen();
+
+
+        }
+        catch(Exception e){
+
+        System.out.println(
+        "Failed logging out"
+        );
+
+        e.printStackTrace();
+
+        }
+
+        }
+
+        }

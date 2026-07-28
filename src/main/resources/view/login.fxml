@@ -5,54 +5,187 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="420.0" prefWidth="400.0" spacing="12.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.LoginController">
+<VBox alignment="CENTER" prefHeight="450.0" prefWidth="400.0"
+      spacing="12.0"
+      style="-fx-background-color: #ffffff;"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.educonnect.LoginController">
+
+
     <padding>
-        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+        <Insets bottom="30.0"
+                left="30.0"
+                right="30.0"
+                top="30.0"/>
     </padding>
 
-    <Label text="EduConnect Forum" textFill="#2a52be">
+
+
+    <Label text="EduConnect Forum"
+           textFill="#2a52be">
+
         <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="System Bold"
+                  size="22.0"/>
         </font>
+
     </Label>
 
-    <Label text="Sign in to your account" textFill="#666666" />
 
-    <VBox alignment="CENTER_LEFT" spacing="5.0">
-        <Label text="Username / Email">
-            <font><Font name="System Bold" size="12.0" /></font>
+
+    <Label text="Sign in to your account"
+           textFill="#666666"/>
+
+
+
+
+
+    <VBox alignment="CENTER_LEFT"
+          spacing="5.0">
+
+
+        <Label text="Email Address">
+
+            <font>
+                <Font name="System Bold"
+                      size="12.0"/>
+            </font>
+
         </Label>
-        <TextField fx:id="emailField" promptText="Enter Email or Username" />
+
+
+
+        <TextField fx:id="emailField"
+                   promptText="Enter Email"/>
+
+
     </VBox>
 
-    <VBox alignment="CENTER_LEFT" spacing="5.0">
+
+
+
+
+
+    <VBox alignment="CENTER_LEFT"
+          spacing="5.0">
+
+
         <Label text="Password">
-            <font><Font name="System Bold" size="12.0" /></font>
+
+            <font>
+                <Font name="System Bold"
+                      size="12.0"/>
+            </font>
+
         </Label>
 
-        <!-- StackPane handling the password toggle view -->
+
+
+
+
         <StackPane alignment="CENTER_RIGHT">
-            <children>
-                <PasswordField fx:id="passwordField" promptText="Enter Password" />
-                <TextField fx:id="visiblePasswordField" promptText="Enter Password" visible="false" managed="false" />
-                <Button fx:id="togglePasswordButton" mnemonicParsing="false" onAction="#handleTogglePassword" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #64748b; -fx-padding: 0 10 0 0;" text="Show" />
-            </children>
+
+
+            <PasswordField fx:id="passwordField"
+                           promptText="Enter Password"/>
+
+
+
+            <TextField fx:id="visiblePasswordField"
+                       promptText="Enter Password"
+                       visible="false"
+                       managed="false"/>
+
+
+
+
+            <Button fx:id="togglePasswordButton"
+                    onAction="#handleTogglePassword"
+                    text="Show"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill:#64748b;
+                           -fx-cursor:hand;"/>
+
+
         </StackPane>
+
+
     </VBox>
 
-    <!-- Role Selection Dropdown -->
-    <VBox alignment="CENTER_LEFT" spacing="5.0">
+
+
+
+
+
+    <VBox alignment="CENTER_LEFT"
+          spacing="5.0">
+
+
         <Label text="Select Role">
-            <font><Font name="System Bold" size="12.0" /></font>
+
+            <font>
+                <Font name="System Bold"
+                      size="12.0"/>
+            </font>
+
         </Label>
-        <ComboBox fx:id="roleComboBox" prefWidth="340.0" promptText="Choose Role (Student/Lecturer/Admin)" />
+
+
+
+
+        <ComboBox fx:id="roleComboBox"
+                  prefWidth="340.0"/>
+
+
     </VBox>
 
-    <Label fx:id="statusLabel" text="" textFill="#dc3545" wrapText="true">
-        <font><Font size="12.0" /></font>
-    </Label>
 
-    <Button fx:id="actionButton" onAction="#handleLoginButtonAction" prefWidth="200.0" style="-fx-background-color: #2a52be; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
 
-    <Hyperlink fx:id="toggleModeLink" onAction="#handleCreateAccountButton" text="Need an account? Register" />
+
+
+
+    <Label fx:id="statusLabel"
+           text=""
+           textFill="#dc3545"/>
+
+
+
+
+
+
+
+    <Button fx:id="actionButton"
+            onAction="#handleLoginButtonAction"
+            prefWidth="250.0"
+            text="Sign In"
+            style="-fx-background-color:#2a52be;
+                   -fx-text-fill:white;
+                   -fx-font-weight:bold;"/>
+
+
+
+
+
+
+
+    <Button fx:id="createAccountButton"
+            onAction="#handleCreateAccountButton"
+            prefWidth="250.0"
+            text="Create Account"
+            style="-fx-background-color:#16a34a;
+                   -fx-text-fill:white;
+                   -fx-font-weight:bold;"/>
+
+
+
+
+
+
+    <Hyperlink fx:id="toggleModeLink"
+               onAction="#handleCreateAccountButton"
+               text="New to EduConnect? Sign Up"/>
+
+
+
 </VBox>

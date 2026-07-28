@@ -1,144 +1,474 @@
 package com.educonnect;
 
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+
 public class LoginController {
+
 
     @FXML
     private TextField emailField;
 
+
     @FXML
     private PasswordField passwordField;
+
 
     @FXML
     private TextField visiblePasswordField;
 
+
     @FXML
     private Button togglePasswordButton;
 
-    @FXML
-    private Button createAccountButton;
 
     @FXML
     private ComboBox<String> roleComboBox;
 
-    @FXML
-    public void initialize() {
-        // Populate the dropdown with your three project roles
-        if (roleComboBox != null) {
-            roleComboBox.getItems().addAll("Student", "Lecturer", "Admin");
-            roleComboBox.setValue("Student"); // Default selection
-        }
-    }
 
     @FXML
-    private void handleTogglePassword() {
-        if (visiblePasswordField.isVisible()) {
-            passwordField.setText(visiblePasswordField.getText());
-            visiblePasswordField.setVisible(false);
-            visiblePasswordField.setManaged(false);
-            passwordField.setVisible(true);
-            passwordField.setManaged(true);
-            togglePasswordButton.setText("Show");
-        } else {
-            visiblePasswordField.setText(passwordField.getText());
-            passwordField.setVisible(false);
-            passwordField.setManaged(false);
+    private Button actionButton;
+
+
+
+    private boolean passwordVisible = false;
+
+
+
+
+    @FXML
+    public void initialize(){
+
+
+        roleComboBox.getItems().addAll(
+                "student",
+                "lecturer",
+                "admin"
+        );
+
+
+        roleComboBox.setValue("student");
+
+
+    }
+
+
+
+
+
+    @FXML
+    private void handleTogglePassword(){
+
+
+        passwordVisible = !passwordVisible;
+
+
+
+        if(passwordVisible){
+
+
+            visiblePasswordField.setText(
+                    passwordField.getText()
+            );
+
+
             visiblePasswordField.setVisible(true);
             visiblePasswordField.setManaged(true);
+
+
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+
+
             togglePasswordButton.setText("Hide");
+
+
         }
+        else{
+
+
+            passwordField.setText(
+                    visiblePasswordField.getText()
+            );
+
+
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+
+
+            visiblePasswordField.setVisible(false);
+            visiblePasswordField.setManaged(false);
+
+
+            togglePasswordButton.setText("Show");
+
+
+        }
+
+
     }
 
+
+
+
+
+
+
     @FXML
-    private void handleLoginButtonAction() {
-        String email = emailField.getText() != null ? emailField.getText().trim() : "";
+    private void handleLoginButtonAction(){
+
+
+
+        String email =
+                emailField.getText()
+                        .trim();
+
+
+
         String password;
-        if (visiblePasswordField.isVisible()) {
-            password = visiblePasswordField.getText() != null ? visiblePasswordField.getText().trim() : "";
-        } else {
-            password = passwordField.getText() != null ? passwordField.getText().trim() : "";
+
+
+
+        if(passwordVisible){
+
+            password =
+                    visiblePasswordField.getText()
+                            .trim();
+
+        }
+        else{
+
+            password =
+                    passwordField.getText()
+                            .trim();
+
         }
 
-        String selectedRole = roleComboBox != null && roleComboBox.getValue() != null
-                ? roleComboBox.getValue().toLowerCase()
-                : "student";
 
-        if (email.isEmpty() || password.isEmpty()) {
-            System.out.println("Please enter both email and password.");
+
+
+
+
+        if(email.isEmpty() || password.isEmpty()){
+
+
+            System.out.println(
+                    "Email and password required"
+            );
+
             return;
+
         }
 
-        // Attempt login via Laravel backend API
-        String response = ApiService.login(email, password);
 
-        boolean loginSuccess = false;
 
-        if (response != null && response.contains("token")) {
-            System.out.println("Login Successful through Laravel backend!");
-            loginSuccess = true;
-        } else {
-            // Fallback: If backend is offline, allow local test login
-            System.out.println("Backend offline or failed. Attempting local validation...");
-            if (!email.isEmpty() && !password.isEmpty()) {
-                System.out.println("Local Offline Login Successful!");
-                loginSuccess = true;
+
+        if(!email.contains("@")){
+
+
+            System.out.println(
+                    "Enter a valid email address"
+            );
+
+            return;
+
+        }
+
+
+
+
+
+
+
+        String response =
+                ApiService.login(
+                        email,
+                        password
+                );
+
+
+
+
+        System.out.println(
+                "Laravel Response:"
+        );
+
+
+        System.out.println(response);
+
+
+
+
+
+
+        if(response != null &&
+                response.contains("token")){
+
+
+            System.out.println(
+                    "Login successful"
+            );
+
+
+            routeUser(response);
+
+
+        }
+        else{
+
+
+            System.out.println(
+                    "Login failed"
+            );
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+    private void routeUser(String response){
+
+
+        try{
+
+
+            Stage stage =
+                    (Stage)
+                            emailField.getScene()
+                                    .getWindow();
+
+
+
+
+            String role =
+                    extractValue(
+                            response,
+                            "role"
+                    );
+
+
+
+            String onboarding =
+                    extractValue(
+                            response,
+                            "onboarding_completed"
+                    );
+
+
+
+
+
+            String page;
+
+
+
+            if(role.equalsIgnoreCase("admin")){
+
+
+                page =
+                        "/view/admin_dashboard.fxml";
+
+
             }
-        }
+            else if(role.equalsIgnoreCase("lecturer")){
 
-        if (loginSuccess) {
-            try {
-                Stage stage = (Stage) emailField.getScene().getWindow();
-                String targetFxml;
 
-                // Route dynamically based on the role chosen or returned
-                switch (selectedRole) {
-                    case "admin":
-                        targetFxml = "/view/admin_dashboard.fxml";
-                        break;
-                    case "lecturer":
-                        targetFxml = "/view/lecturer_dashboard.fxml";
-                        break;
-                    case "student":
-                    default:
-                        targetFxml = "/view/onboarding_step1.fxml"; // or your student dashboard
-                        break;
+                page =
+                        "/view/lecturer_dashboard.fxml";
+
+
+            }
+            else{
+
+
+                if(onboarding.equals("true")
+                        || onboarding.equals("1")
+                        || onboarding.equals("0")==false){
+
+
+                    page =
+                            "/src/main/com.educonnect/student_dashboard.fxml";
+
+
+                }
+                else{
+
+
+                    page =
+                            "/view/onboarding_step1.fxml";
+
+
                 }
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(targetFxml));
-                Scene scene = new Scene(loader.load());
 
-                stage.setTitle("EduConnect - " + selectedRole.toUpperCase() + " Portal");
-                stage.setScene(scene);
-                stage.centerOnScreen();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Failed to load dashboard view for role: " + selectedRole);
             }
-        } else {
-            System.out.println("Login Failed. Check credentials or ensure Laravel backend is running.");
+
+
+
+
+
+
+            FXMLLoader loader =
+                    new FXMLLoader(
+                            getClass()
+                                    .getResource(page)
+                    );
+
+
+
+            Scene scene =
+                    new Scene(
+                            loader.load()
+                    );
+
+
+
+            stage.setScene(scene);
+
+            stage.centerOnScreen();
+
+
+
         }
+        catch(Exception e){
+
+
+            System.out.println(
+                    "Navigation error"
+            );
+
+
+            e.printStackTrace();
+
+
+        }
+
+
+
     }
+
+
+
+
+
+
+
+
+    private String extractValue(
+            String json,
+            String key
+    ){
+
+
+        try{
+
+
+            if(key.equals("role")){
+
+
+                return json.split("\"role\":\"")[1]
+                        .split("\"")[0];
+
+            }
+
+
+
+            if(key.equals("onboarding_completed")){
+
+
+                return json.split("\"onboarding_completed\":")[1]
+                        .split("}")[0]
+                        .replace(",","")
+                        .trim();
+
+            }
+
+
+        }
+        catch(Exception e){
+
+
+            return "";
+
+        }
+
+
+
+        return "";
+
+    }
+
+
+
+
+
+
+
 
     @FXML
-    private void handleCreateAccountButton() {
-        try {
-            Stage stage = (Stage) createAccountButton.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/signup.fxml"));
-            Parent root = loader.load();
-            stage.setScene(new Scene(root));
-            stage.setTitle("EduConnect - Sign Up");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void handleCreateAccountButton(){
+
+
+        try{
+
+
+            Stage stage =
+                    (Stage)
+                            emailField.getScene()
+                                    .getWindow();
+
+
+
+            FXMLLoader loader =
+                    new FXMLLoader(
+                            getClass()
+                                    .getResource("/view/register.fxml")
+                    );
+
+
+
+            Scene scene =
+                    new Scene(
+                            loader.load()
+                    );
+
+
+
+            stage.setTitle(
+                    "EduConnect - Create Account"
+            );
+
+
+            stage.setScene(scene);
+
+            stage.centerOnScreen();
+
+
+
         }
+        catch(Exception e){
+
+
+            e.printStackTrace();
+
+
+        }
+
+
     }
+
+
 }

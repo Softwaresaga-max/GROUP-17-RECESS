@@ -2,55 +2,133 @@ package com.educonnect;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class SignupController {
 
-    @FXML private TextField nameField;
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
-    @FXML private ComboBox<String> roleComboBox;
-    @FXML private Button submitButton;
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private ComboBox<String> roleComboBox;
+
+    @FXML
+    private Button submitButton;
+
 
     @FXML
     public void initialize() {
-        if (roleComboBox != null) {
-            roleComboBox.getItems().addAll("Student", "Lecturer", "Admin");
-            roleComboBox.setValue("Student"); // Default selection
-        }
+
+        roleComboBox.getItems().addAll(
+                "student",
+                "lecturer",
+                "admin"
+        );
+
+        roleComboBox.setValue("student");
+
     }
+
+
 
     @FXML
     private void handleRegister() {
-        String name = nameField.getText();
-        String email = emailField.getText();
-        String password = passwordField.getText();
+
+
+        String name = nameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
         String role = roleComboBox.getValue();
 
-        // Basic validation
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            System.out.println("Please fill in all credential fields!");
+
+
+        if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
+
+            System.out.println("Please fill all fields");
             return;
+
         }
 
-        try {
-            // After entering credentials, transition into onboarding step 1
-            Stage stage = (Stage) submitButton.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/onboarding_step1.fxml"));
-            Parent root = loader.load();
-            stage.setScene(new Scene(root));
-            stage.setTitle("EduConnect - Onboarding");
-            stage.show();
 
-            System.out.println("Account details captured for role: " + role);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        String response = ApiService.register(
+                name,
+                email,
+                password,
+                role
+        );
+
+
+        System.out.println("Laravel Register Response:");
+        System.out.println(response);
+
+
+
+        if(response != null && response.contains("Account created successfully")){
+
+
+            System.out.println("Registration successful");
+
+
+            openOnboarding();
+
+
         }
+        else{
+
+            System.out.println("Registration failed");
+
+        }
+
+
     }
+
+
+
+    private void openOnboarding(){
+
+        try{
+
+
+            Stage stage =
+                    (Stage) submitButton.getScene().getWindow();
+
+
+
+            FXMLLoader loader =
+                    new FXMLLoader(
+                            getClass().getResource("/view/onboarding_step1.fxml")
+                    );
+
+
+            Scene scene =
+                    new Scene(loader.load());
+
+
+
+            stage.setTitle("EduConnect - Onboarding");
+
+            stage.setScene(scene);
+
+            stage.centerOnScreen();
+
+
+
+        }
+        catch(Exception e){
+
+            e.printStackTrace();
+
+        }
+
+    }
+
 }

@@ -1,67 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.educonnect.OnboardingStep2Controller">
+
+<AnchorPane prefHeight="600.0"
+            prefWidth="800.0"
+            style="-fx-background-color:#f8fafc;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.educonnect.OnboardingStep2Controller">
+
+
     <children>
-        <VBox alignment="CENTER" layoutX="250.0" layoutY="30.0" spacing="10.0">
+
+
+        <VBox alignment="CENTER"
+              layoutX="300.0"
+              layoutY="30.0"
+              spacing="8.0">
+
             <children>
-                <Label style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-padding: 8 12; -fx-background-radius: 8;" text="E" textFill="WHITE">
+
+                <Label text="E"
+                       textFill="WHITE"
+                       style="-fx-background-color:#4f46e5;
+                              -fx-padding:8 14;
+                              -fx-background-radius:10;">
+
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="22.0"/>
                     </font>
+
                 </Label>
-                <Label text="Educonnect">
+
+
+                <Label text="EduConnect">
+
                     <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="24.0"/>
                     </font>
+
                 </Label>
+
+
             </children>
+
         </VBox>
 
-        <AnchorPane layoutX="150.0" layoutY="130.0" prefHeight="420.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);">
+
+
+
+
+        <AnchorPane layoutX="150.0"
+                    layoutY="120.0"
+                    prefHeight="450.0"
+                    prefWidth="500.0"
+                    style="-fx-background-color:white;
+                           -fx-background-radius:15;
+                           -fx-effect:dropshadow(three-pass-box,
+                           rgba(0,0,0,0.08),10,0,0,4);">
+
+
             <children>
-                <Label alignment="CENTER" layoutX="130.0" layoutY="30.0" prefWidth="240.0" text="🎓 EDUCONNECT Onboarding" textFill="#1e293b">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                </Label>
-                <Label alignment="CENTER" layoutX="200.0" layoutY="55.0" text="Step 2 of 3" textFill="#64748b">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                </Label>
 
-                <ProgressBar layoutX="50.0" layoutY="90.0" prefHeight="8.0" prefWidth="400.0" progress="0.66" style="-fx-accent: #0ea5e9;" />
 
-                <Label alignment="CENTER" layoutX="150.0" layoutY="115.0" prefWidth="200.0" text="📌 System Rules" textFill="#1e293b">
+                <Label layoutX="130.0"
+                       layoutY="30.0"
+                       text="Student Information"
+                       textFill="#1e293b">
+
                     <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="20.0"/>
                     </font>
+
                 </Label>
 
-                <Label layoutX="70.0" layoutY="160.0" text="✓ Respect all discussions" textFill="#334155" />
-                <Label layoutX="70.0" layoutY="190.0" text="✓ Participate actively in forums" textFill="#334155" />
-                <Label layoutX="70.0" layoutY="220.0" text="⚠ 2 warnings = automatic blacklist" textFill="#d97706" />
-                <Label layoutX="70.0" layoutY="250.0" text="⚠ Late joining may limit participation" textFill="#d97706" />
 
-                <Button fx:id="backButton" layoutX="50.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #cbd5e1; -fx-text-fill: #1e293b; -fx-background-radius: 6;" text="← Back">
+
+                <Label layoutX="205.0"
+                       layoutY="65.0"
+                       text="Step 2 of 3"
+                       textFill="#64748b"/>
+
+
+
+
+                <ProgressBar layoutX="50.0"
+                             layoutY="100.0"
+                             prefWidth="400.0"
+                             progress="0.66"/>
+
+
+
+
+
+                <VBox layoutX="70.0"
+                      layoutY="150.0"
+                      spacing="15.0"
+                      prefWidth="360.0">
+
+
+                    <children>
+
+
+                        <TextField fx:id="nameField"
+                                   promptText="Full Name"/>
+
+
+
+                        <TextField fx:id="registrationField"
+                                   promptText="Registration Number"/>
+
+
+
+                        <TextField fx:id="courseField"
+                                   promptText="Programme / Course"/>
+
+
+
+                        <ComboBox fx:id="yearComboBox"
+                                  promptText="Year of Study"/>
+
+
+                    </children>
+
+
+                </VBox>
+
+
+
+
+
+
+                <Button fx:id="nextButton"
+                        layoutX="340.0"
+                        layoutY="370.0"
+                        prefWidth="110.0"
+                        text="Next ➔"
+                        onAction="#handleNext"
+                        style="-fx-background-color:#0ea5e9;
+                               -fx-text-fill:white;
+                               -fx-background-radius:8;">
+
+
                     <font>
-                        <Font name="System Bold" size="13.0" />
+
+                        <Font name="System Bold"
+                              size="14.0"/>
+
                     </font>
+
+
                 </Button>
 
-                <Button fx:id="nextButton" layoutX="340.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleNext" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #0ea5e9; -fx-text-fill: white; -fx-background-radius: 6;" text="Next ➔">
-                    <font>
-                        <Font name="System Bold" size="13.0" />
-                    </font>
-                </Button>
+
+
+
             </children>
+
+
         </AnchorPane>
+
+
     </children>
+
+
 </AnchorPane>

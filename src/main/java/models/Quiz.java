@@ -1,23 +1,66 @@
+package com.educonnect.models;
+
+
 public class Quiz {
+
     private int id;
     private String title;
     private String description;
-    private int userId;
-    private boolean isActive;
+    private int duration;
+    private String status;
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public Quiz(
+            int id,
+            String title,
+            String description,
+            int duration,
+            String status
+    ){
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.duration = duration;
+        this.status = status;
 
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    }
 
-    public boolean isIsActive() { return isActive; }
-    public void setIsActive(boolean isActive) { this.isActive = isActive; }
+
+
+    public int getId(){
+
+        return id;
+
+    }
+
+
+    public String getTitle(){
+
+        return title;
+
+    }
+
+
+    public String getDescription(){
+
+        return description;
+
+    }
+
+
+    public int getDuration(){
+
+        return duration;
+
+    }
+
+
+    public String getStatus(){
+
+        return status;
+
+    }
+
+
 }
